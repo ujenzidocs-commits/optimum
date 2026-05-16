@@ -1,0 +1,75 @@
+import { useState, useEffect } from 'react';
+import { SiteProvider } from './context/SiteContext';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import TrustBanner from './components/TrustBanner';
+import About from './components/About';
+import FeatureShowcase from './components/FeatureShowcase';
+import Features from './components/Features';
+import HowItWorks from './components/HowItWorks';
+import ImplementationDetail from './components/ImplementationDetail';
+import Products from './components/Products';
+import Industries from './components/Industries';
+import Testimonials from './components/Testimonials';
+import Blog from './components/Blog';
+import FAQ from './components/FAQ';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
+import Chatbot from './components/Chatbot';
+import WhatsAppButton from './components/WhatsAppButton';
+import StickyDownloadBar from './components/StickyDownloadBar';
+import AdminLogin from './admin/AdminLogin';
+import AdminLayout from './admin/AdminLayout';
+
+type View = 'site' | 'login' | 'admin';
+
+function Inner() {
+  const [view, setView] = useState<View>('site');
+
+  useEffect(() => {
+    const check = () => {
+      if (window.location.hash === '#admin') {
+        setView(sessionStorage.getItem('ops_admin') === '1' ? 'admin' : 'login');
+      } else {
+        setView('site');
+      }
+    };
+    check();
+    window.addEventListener('hashchange', check);
+    return () => window.removeEventListener('hashchange', check);
+  }, []);
+
+  if (view === 'login') return <AdminLogin onLogin={() => setView('admin')} />;
+  if (view === 'admin') return <AdminLayout onLogout={() => { sessionStorage.removeItem('ops_admin'); window.location.hash = ''; setView('site'); }} />;
+
+  return (
+    <div className="min-h-screen bg-white dark:bg-navy-950">
+      <StickyDownloadBar />
+      <Navbar />
+      <Hero />
+      <TrustBanner />
+      <About />
+      <FeatureShowcase />
+      <Features />
+      <HowItWorks />
+      <ImplementationDetail />
+      <Products />
+      <Industries />
+      <Testimonials />
+      <Blog />
+      <FAQ />
+      <Contact />
+      <Footer />
+      <Chatbot />
+      <WhatsAppButton />
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <SiteProvider>
+      <Inner />
+    </SiteProvider>
+  );
+}
