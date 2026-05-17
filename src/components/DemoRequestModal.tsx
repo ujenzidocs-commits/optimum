@@ -35,42 +35,30 @@ export default function DemoRequestModal({ isOpen, onClose, companyPhone, compan
     setSubmitting(true);
     
     try {
-      // Send email via Formspree
-      const formspreeEndpoint = 'https://formspree.io/f/mzzbqqbk'; // Replace with your Formspree endpoint
-      const response = await fetch(formspreeEndpoint, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-          company: form.company,
-          demoDate: form.demoDate,
-          message: form.message || 'No message',
-        }),
+      // Save to localStorage as backup
+      const leads = JSON.parse(localStorage.getItem('ops_leads') || '[]');
+      leads.push({
+        id: Date.now(),
+        timestamp: new Date().toISOString(),
+        ...form,
+        status: 'New'
       });
+      localStorage.setItem('ops_leads', JSON.stringify(leads));
 
-      if (response.ok) {
-        // Send WhatsApp message
-        const waText = `Hi Optimum Prime Solutions,\n\nI'm ${form.name} from ${form.company || 'my company'}.\n\nI'd like to request a demo for Tally Prime.\n\nPhone: ${form.phone}\nEmail: ${form.email}\nPreferred Date: ${form.demoDate || 'Any time'}\n\n${form.message ? `Details: ${form.message}` : ''}`;
-        
-        const waLink = `https://wa.me/${companyWhatsapp}?text=${encodeURIComponent(waText)}`;
-        window.open(waLink, '_blank');
+      // Send WhatsApp message
+      const waText = `Hi Optimum Prime Solutions,\n\nI'm ${form.name} from ${form.company || 'my company'}.\n\nI'd like to request a demo for Tally Prime.\n\nPhone: ${form.phone}\nEmail: ${form.email}\nPreferred Date: ${form.demoDate || 'Any time'}\n\n${form.message ? `Details: ${form.message}` : ''}`;
+      
+      const waLink = `https://wa.me/${companyWhatsapp}?text=${encodeURIComponent(waText)}`;
+      window.open(waLink, '_blank');
 
-        setSuccess(true);
-        setForm({ name: '', email: '', phone: '', company: '', demoDate: '', message: '' });
-        setTimeout(() => {
-          setSuccess(false);
-          onClose();
-        }, 3000);
-      } else {
-        setError('Failed to send request. Please try again.');
-      }
+      setSuccess(true);
+      setForm({ name: '', email: '', phone: '', company: '', demoDate: '', message: '' });
+      setTimeout(() => {
+        setSuccess(false);
+        onClose();
+      }, 3000);
     } catch (err) {
-      setError('Error sending request. Please contact us directly.');
+      setError('Error processing request. Please contact us directly.');
       console.error('Error:', err);
     } finally {
       setSubmitting(false);
