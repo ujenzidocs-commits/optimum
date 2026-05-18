@@ -64,8 +64,7 @@ export default function Features() {
                 key={svc.id}
                 variants={itemVariants}
                 whileHover={{ y: -12, rotateX: -5, transition: { duration: 0.3 } }}
-                className="group relative rounded-2xl border border-navy-100 dark:border-navy-700 bg-white dark:bg-navy-800/50 p-6 shadow-md hover:shadow-2xl hover:shadow-accent/30 transition-all duration-300 cursor-pointer overflow-hidden"
-                onClick={() => svc.link && window.open(svc.link, '_blank')}
+                className="group relative rounded-2xl border border-navy-100 dark:border-navy-700 bg-white dark:bg-navy-800/50 p-6 shadow-md hover:shadow-2xl hover:shadow-accent/30 transition-all duration-300 overflow-hidden"
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 {/* Gradient border on hover */}
@@ -127,15 +126,24 @@ export default function Features() {
                 </ul>
 
                 {/* CTA */}
-                <motion.div
+                <motion.a
+                  href={svc.link || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    if (svc.link) {
+                      e.preventDefault();
+                      window.open(svc.link, '_blank');
+                    }
+                  }}
                   whileHover={{ x: 4 }}
-                  className="mt-5 inline-flex items-center gap-1 text-xs font-semibold text-accent hover:text-accent-dark transition group/link"
+                  className="mt-5 inline-flex items-center gap-1 text-xs font-semibold text-accent hover:text-accent-dark transition group/link cursor-pointer"
                 >
                   View on Tally
                   <motion.div whileHover={{ x: 2 }} className="group-hover/link:text-accent-dark">
                     <ExternalLink className="h-3 w-3" />
                   </motion.div>
-                </motion.div>
+                </motion.a>
               </motion.div>
             );
           })}
