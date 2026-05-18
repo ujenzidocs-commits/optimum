@@ -35,6 +35,22 @@ export default function DemoRequestModal({ isOpen, onClose, companyPhone, compan
     setSubmitting(true);
     
     try {
+      // Send to Formspree
+      const formData = new FormData();
+      formData.append('name', form.name);
+      formData.append('email', form.email);
+      formData.append('phone', form.phone);
+      formData.append('company', form.company);
+      formData.append('demoDate', form.demoDate);
+      formData.append('message', form.message);
+
+      const response = await fetch('https://formspree.io/f/mvzyoyzz', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) throw new Error('Failed to send email');
+
       // Save to localStorage as backup
       const leads = JSON.parse(localStorage.getItem('ops_leads') || '[]');
       leads.push({
@@ -58,8 +74,34 @@ export default function DemoRequestModal({ isOpen, onClose, companyPhone, compan
         onClose();
       }, 3000);
     } catch (err) {
-      setError('Error processing request. Please contact us directly.');
+      setError('Error sending email. Trying alternate method...');
       console.error('Error:', err);
+      // Still save to localStorage and open WhatsApp as fallback
+      try {
+        const leads = JSON.parse(localStorage.getItem('ops_leads') || '[]');
+        leads.push({
+          id: Date.now(),
+          timestamp: new Date().toISOString(),
+          ...form,
+          status: 'New'
+        });
+        localStorage.setItem('ops_leads', JSON.stringify(leads));
+
+        const waText = `Hi Optimum Prime Solutions,\n\nI'm ${form.name} from ${form.company || 'my company'}.\n\nI'd like to request a demo for Tally Prime.\n\nPhone: ${form.phone}\nEmail: ${form.email}\nPreferred Date: ${form.demoDate || 'Any time'}\n\n${form.message ? `Details: ${form.message}` : ''}`;
+        
+        const waLink = `https://wa.me/${companyWhatsapp}?text=${encodeURIComponent(waText)}`;
+        window.open(waLink, '_blank');
+
+        setSuccess(true);
+        setForm({ name: '', email: '', phone: '', company: '', demoDate: '', message: '' });
+        setTimeout(() => {
+          setSuccess(false);
+          onClose();
+        }, 3000);
+      } catch (fallbackErr) {
+        setError('Error processing request. Please contact us directly.');
+        console.error('Fallback error:', fallbackErr);
+      }
     } finally {
       setSubmitting(false);
     }
