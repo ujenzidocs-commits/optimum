@@ -70,15 +70,38 @@ export default function Hero() {
               </motion.span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold text-white leading-[1.08] tracking-tight">
-              Transform Your Business with{' '}
-              <span className="relative">
+            <motion.h1 
+              className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold text-white leading-[1.08] tracking-tight"
+              style={{ perspective: "1200px" }}
+            >
+              <motion.span
+                initial={{ opacity: 0, rotateX: 15 }}
+                animate={{ opacity: 1, rotateX: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                Transform Your Business with{' '}
+              </motion.span>
+              <motion.span 
+                className="relative inline-block"
+                initial={{ opacity: 0, rotateX: 15, scale: 0.95 }}
+                animate={{ opacity: 1, rotateX: 0, scale: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+                style={{ transformStyle: 'preserve-3d' }}
+              >
                 <span className="bg-gradient-to-r from-accent via-blue-200 to-accent bg-clip-text text-transparent animate-gradient">
                   Smart Tally Prime
                 </span>
-              </span>
-              {' '}Solutions
-            </h1>
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, rotateX: 15 }}
+                animate={{ opacity: 1, rotateX: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                {' '}Solutions
+              </motion.span>
+            </motion.h1>
 
             {/* 3D Tagline */}
             <motion.div

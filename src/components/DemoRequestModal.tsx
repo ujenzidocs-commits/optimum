@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useForm, ValidationError } from '@formspree/react';
 
 interface Props {
   isOpen: boolean;
@@ -11,101 +12,50 @@ interface Props {
 }
 
 export default function DemoRequestModal({ isOpen, onClose, companyPhone, companyEmail, companyWhatsapp }: Props) {
-  const [form, setForm] = useState({
+  const [state, handleSubmit] = useForm('mvzyoyzz');
+  const [formData, setFormData] = useState({
     name: '', email: '', phone: '', company: '', demoDate: '', message: ''
   });
-  const [submitting, setSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
     
-    if (!form.name || !form.email || !form.phone) {
-      setError('Please fill in required fields');
-      return;
-    }
-
-    setSubmitting(true);
+    // Call Formspree handler
+    await handleSubmit(e);
     
-    try {
-      // Send to Formspree
-      const formData = new FormData();
-      formData.append('name', form.name);
-      formData.append('email', form.email);
-      formData.append('phone', form.phone);
-      formData.append('company', form.company);
-      formData.append('demoDate', form.demoDate);
-      formData.append('message', form.message);
+    // Save to localStorage as backup
+    const leads = JSON.parse(localStorage.getItem('ops_leads') || '[]');
+    leads.push({
+      id: Date.now(),
+      timestamp: new Date().toISOString(),
+      ...formData,
+      status: 'New'
+    });
+    localStorage.setItem('ops_leads', JSON.stringify(leads));
 
-      const response = await fetch('https://formspree.io/f/mvzyoyzz', {
-        method: 'POST',
-        body: formData
-      });
+    // Open WhatsApp
+    const waText = `Hi Optimum Prime Solutions,\n\nI'm ${formData.name} from ${formData.company || 'my company'}.\n\nI'd like to request a demo for Tally Prime.\n\nPhone: ${formData.phone}\nEmail: ${formData.email}\nPreferred Date: ${formData.demoDate || 'Any time'}\n\n${formData.message ? `Details: ${formData.message}` : ''}`;
+    
+    const waLink = `https://wa.me/${companyWhatsapp}?text=${encodeURIComponent(waText)}`;
+    setTimeout(() => window.open(waLink, '_blank'), 500);
 
-      if (!response.ok) throw new Error('Failed to send email');
-
-      // Save to localStorage as backup
-      const leads = JSON.parse(localStorage.getItem('ops_leads') || '[]');
-      leads.push({
-        id: Date.now(),
-        timestamp: new Date().toISOString(),
-        ...form,
-        status: 'New'
-      });
-      localStorage.setItem('ops_leads', JSON.stringify(leads));
-
-      // Send WhatsApp message
-      const waText = `Hi Optimum Prime Solutions,\n\nI'm ${form.name} from ${form.company || 'my company'}.\n\nI'd like to request a demo for Tally Prime.\n\nPhone: ${form.phone}\nEmail: ${form.email}\nPreferred Date: ${form.demoDate || 'Any time'}\n\n${form.message ? `Details: ${form.message}` : ''}`;
-      
-      const waLink = `https://wa.me/${companyWhatsapp}?text=${encodeURIComponent(waText)}`;
-      window.open(waLink, '_blank');
-
-      setSuccess(true);
-      setForm({ name: '', email: '', phone: '', company: '', demoDate: '', message: '' });
-      setTimeout(() => {
-        setSuccess(false);
-        onClose();
-      }, 3000);
-    } catch (err) {
-      setError('Error sending email. Trying alternate method...');
-      console.error('Error:', err);
-      // Still save to localStorage and open WhatsApp as fallback
-      try {
-        const leads = JSON.parse(localStorage.getItem('ops_leads') || '[]');
-        leads.push({
-          id: Date.now(),
-          timestamp: new Date().toISOString(),
-          ...form,
-          status: 'New'
-        });
-        localStorage.setItem('ops_leads', JSON.stringify(leads));
-
-        const waText = `Hi Optimum Prime Solutions,\n\nI'm ${form.name} from ${form.company || 'my company'}.\n\nI'd like to request a demo for Tally Prime.\n\nPhone: ${form.phone}\nEmail: ${form.email}\nPreferred Date: ${form.demoDate || 'Any time'}\n\n${form.message ? `Details: ${form.message}` : ''}`;
-        
-        const waLink = `https://wa.me/${companyWhatsapp}?text=${encodeURIComponent(waText)}`;
-        window.open(waLink, '_blank');
-
-        setSuccess(true);
-        setForm({ name: '', email: '', phone: '', company: '', demoDate: '', message: '' });
-        setTimeout(() => {
-          setSuccess(false);
-          onClose();
-        }, 3000);
-      } catch (fallbackErr) {
-        setError('Error processing request. Please contact us directly.');
-        console.error('Fallback error:', fallbackErr);
-      }
-    } finally {
-      setSubmitting(false);
-    }
+    // Show success and reset
+    setShowSuccess(true);
+    setFormData({ name: '', email: '', phone: '', company: '', demoDate: '', message: '' });
+    
+    setTimeout(() => {
+      setShowSuccess(false);
+      onClose();
+    }, 3000);
   };
+
+  const isSuccess = state.succeeded || showSuccess;
 
   return (
     <AnimatePresence>
@@ -134,7 +84,7 @@ export default function DemoRequestModal({ isOpen, onClose, companyPhone, compan
               </button>
             </div>
 
-            {success ? (
+            {isSuccess ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -149,15 +99,15 @@ export default function DemoRequestModal({ isOpen, onClose, companyPhone, compan
                 </p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {error && (
+              <form onSubmit={handleFormSubmit} className="space-y-4">
+                {state.errors && state.errors.length > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="flex items-start gap-3 rounded-lg bg-red-50 dark:bg-red-900/20 p-4 text-red-700 dark:text-red-400"
                   >
                     <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
-                    <span className="text-sm">{error}</span>
+                    <span className="text-sm">Please check all fields and try again</span>
                   </motion.div>
                 )}
 
@@ -169,12 +119,13 @@ export default function DemoRequestModal({ isOpen, onClose, companyPhone, compan
                     <input
                       type="text"
                       name="name"
-                      value={form.name}
+                      value={formData.name}
                       onChange={handleChange}
                       placeholder="John Doe"
                       className="w-full rounded-lg border border-navy-200 dark:border-navy-600 bg-navy-50 dark:bg-navy-700 px-4 py-2.5 text-navy-900 dark:text-white placeholder-navy-400 dark:placeholder-navy-500 outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
                       required
                     />
+                    <ValidationError field="name" errors={state.errors} />
                   </div>
 
                   <div>
@@ -184,12 +135,13 @@ export default function DemoRequestModal({ isOpen, onClose, companyPhone, compan
                     <input
                       type="email"
                       name="email"
-                      value={form.email}
+                      value={formData.email}
                       onChange={handleChange}
                       placeholder="john@company.ke"
                       className="w-full rounded-lg border border-navy-200 dark:border-navy-600 bg-navy-50 dark:bg-navy-700 px-4 py-2.5 text-navy-900 dark:text-white placeholder-navy-400 dark:placeholder-navy-500 outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
                       required
                     />
+                    <ValidationError field="email" errors={state.errors} />
                   </div>
 
                   <div>
@@ -199,12 +151,13 @@ export default function DemoRequestModal({ isOpen, onClose, companyPhone, compan
                     <input
                       type="tel"
                       name="phone"
-                      value={form.phone}
+                      value={formData.phone}
                       onChange={handleChange}
                       placeholder="+254 700 000 000"
                       className="w-full rounded-lg border border-navy-200 dark:border-navy-600 bg-navy-50 dark:bg-navy-700 px-4 py-2.5 text-navy-900 dark:text-white placeholder-navy-400 dark:placeholder-navy-500 outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
                       required
                     />
+                    <ValidationError field="phone" errors={state.errors} />
                   </div>
 
                   <div>
@@ -214,7 +167,7 @@ export default function DemoRequestModal({ isOpen, onClose, companyPhone, compan
                     <input
                       type="text"
                       name="company"
-                      value={form.company}
+                      value={formData.company}
                       onChange={handleChange}
                       placeholder="Your Company Ltd"
                       className="w-full rounded-lg border border-navy-200 dark:border-navy-600 bg-navy-50 dark:bg-navy-700 px-4 py-2.5 text-navy-900 dark:text-white placeholder-navy-400 dark:placeholder-navy-500 outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
@@ -229,7 +182,7 @@ export default function DemoRequestModal({ isOpen, onClose, companyPhone, compan
                   <input
                     type="date"
                     name="demoDate"
-                    value={form.demoDate}
+                    value={formData.demoDate}
                     onChange={handleChange}
                     className="w-full rounded-lg border border-navy-200 dark:border-navy-600 bg-navy-50 dark:bg-navy-700 px-4 py-2.5 text-navy-900 dark:text-white outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
                   />
@@ -241,7 +194,7 @@ export default function DemoRequestModal({ isOpen, onClose, companyPhone, compan
                   </label>
                   <textarea
                     name="message"
-                    value={form.message}
+                    value={formData.message}
                     onChange={handleChange}
                     placeholder="Tell us about your needs..."
                     rows={3}
@@ -251,13 +204,13 @@ export default function DemoRequestModal({ isOpen, onClose, companyPhone, compan
 
                 <motion.button
                   type="submit"
-                  disabled={submitting}
+                  disabled={state.submitting}
                   whileHover={{ scale: 0.98 }}
                   whileTap={{ scale: 0.95 }}
                   className="w-full rounded-lg bg-gradient-to-r from-accent to-blue-600 px-6 py-3 font-semibold text-white shadow-lg shadow-accent/30 hover:shadow-xl hover:shadow-accent/40 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   <Send className="h-4 w-4" />
-                  {submitting ? 'Sending...' : 'Request Demo'}
+                  {state.submitting ? 'Sending...' : 'Request Demo'}
                 </motion.button>
 
                 <p className="text-xs text-navy-500 dark:text-navy-400 text-center">
