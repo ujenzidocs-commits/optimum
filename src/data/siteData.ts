@@ -3,7 +3,7 @@ export interface ProductItem { id:string; name:string; edition:string; price:str
 export interface TestimonialItem { id:string; name:string; role:string; company:string; text:string; rating:number }
 export interface FaqItem { id:string; q:string; a:string; cat:string }
 export interface IndustryItem { id:string; name:string; icon:string; desc:string }
-export interface BlogPost { id:string; title:string; excerpt:string; date:string; category:string; readTime:string; content:string }
+export interface BlogPost { id:string; title:string; excerpt:string; date:string; category:string; readTime:string; content:string; youtubeUrl?:string }
 export interface Lead { id:string; name:string; company:string; phone:string; email:string; businessType:string; demoDate:string; currentSoftware:string; message:string; createdAt:string; status:string }
 export interface ContactInfo { location:string; phones:string[]; emails:string[]; workingHours:string[]; whatsapp:string; mapUrl:string }
 export interface CompanyInfo { name:string; tagline:string; mission:string; vision:string; about:string[]; stats:{label:string;value:string}[] }

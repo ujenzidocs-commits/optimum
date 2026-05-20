@@ -1,0 +1,155 @@
+import { motion } from 'framer-motion';
+import { X, Calendar, Clock, ArrowLeft } from 'lucide-react';
+import { useSite } from '../context/SiteContext';
+
+interface Props {
+  blogId: string;
+  onClose: () => void;
+}
+
+// Extract YouTube video ID from URL
+const getYoutubeEmbedUrl = (url: string) => {
+  if (!url) return '';
+  
+  // Handle different YouTube URL formats
+  let videoId = '';
+  
+  if (url.includes('youtube.com/watch?v=')) {
+    videoId = url.split('v=')[1]?.split('&')[0] || '';
+  } else if (url.includes('youtu.be/')) {
+    videoId = url.split('youtu.be/')[1]?.split('?')[0] || '';
+  } else if (url.match(/^[a-zA-Z0-9_-]{11}$/)) {
+    videoId = url; // Assume it's just the video ID
+  }
+  
+  return videoId ? `https://www.youtube.com/embed/${videoId}` : '';
+};
+
+export default function BlogDetail({ blogId, onClose }: Props) {
+  const { data } = useSite();
+  const blog = data.blogs.find(b => b.id === blogId);
+
+  if (!blog) return null;
+
+  const embedUrl = getYoutubeEmbedUrl(blog.youtubeUrl || '');
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        onClick={(e) => e.stopPropagation()}
+        className="relative bg-white dark:bg-navy-900 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+      >
+        {/* Header */}
+        <div className="sticky top-0 bg-gradient-to-r from-navy-900 to-navy-800 p-6 flex items-center justify-between border-b border-navy-700">
+          <button
+            onClick={onClose}
+            className="flex items-center gap-2 text-white/80 hover:text-white transition"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            <span>Back</span>
+          </button>
+          <button
+            onClick={onClose}
+            className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition"
+          >
+            <X className="h-6 w-6" />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="p-8">
+          {/* Meta Information */}
+          <div className="flex flex-wrap items-center gap-4 mb-6 text-sm text-navy-600 dark:text-navy-400">
+            <span className="flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              {new Date(blog.date).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </span>
+            <span className="flex items-center gap-2">
+              <Clock className="h-4 w-4" />
+              {blog.readTime}
+            </span>
+            <span className="rounded-full bg-navy-100 dark:bg-navy-800 px-3 py-1 text-xs font-semibold text-navy-700 dark:text-navy-300">
+              {blog.category}
+            </span>
+          </div>
+
+          {/* Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl font-bold text-navy-900 dark:text-white mb-8 leading-tight"
+          >
+            {blog.title}
+          </motion.h1>
+
+          {/* YouTube Video */}
+          {embedUrl && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mb-8"
+            >
+              <div className="relative w-full bg-black rounded-xl overflow-hidden" style={{ paddingBottom: '56.25%' }}>
+                <iframe
+                  src={embedUrl}
+                  title={blog.title}
+                  className="absolute top-0 left-0 w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ border: 'none' }}
+                />
+              </div>
+            </motion.div>
+          )}
+
+          {/* Article Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: embedUrl ? 0.3 : 0.2 }}
+            className="prose dark:prose-invert max-w-none"
+          >
+            <div className="text-lg text-navy-700 dark:text-navy-300 leading-relaxed whitespace-pre-wrap">
+              {blog.content}
+            </div>
+          </motion.div>
+
+          {/* Footer */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="mt-12 pt-8 border-t border-navy-200 dark:border-navy-700"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-blue-600 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold">OP</span>
+              </div>
+              <div>
+                <p className="font-semibold text-navy-900 dark:text-white">Optimum Prime Solutions</p>
+                <p className="text-sm text-navy-600 dark:text-navy-400">
+                  Your trusted Tally Prime implementation partner in East Africa.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}

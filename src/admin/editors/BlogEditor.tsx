@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Save, Plus, X, ChevronDown, Calendar, Clock } from 'lucide-react';
+import { Save, Plus, X, ChevronDown, Calendar, Clock, Play } from 'lucide-react';
 import type { SiteData, BlogPost } from '../../data/siteData';
 
 interface P { data: SiteData; onSave: (d: SiteData) => void }
@@ -9,7 +9,7 @@ export default function BlogEditor({ data, onSave }: P) {
   const [exp, setExp] = useState<string | null>(null);
 
   const add = () => {
-    const n: BlogPost = { id: Date.now() + '', title: '', excerpt: '', date: new Date().toISOString().split('T')[0], category: 'Insights', readTime: '5 min', content: '' };
+    const n: BlogPost = { id: Date.now() + '', title: '', excerpt: '', date: new Date().toISOString().split('T')[0], category: 'Insights', readTime: '5 min', content: '', youtubeUrl: '' };
     setItems([...items, n]);
     setExp(n.id);
   };
@@ -35,6 +35,7 @@ export default function BlogEditor({ data, onSave }: P) {
                 <span className="flex items-center gap-1"><Calendar className="h-3 w-3" />{b.date}</span>
                 <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{b.readTime}</span>
                 <span className="rounded-full bg-navy-100 px-2 py-0.5 text-[10px] font-medium">{b.category}</span>
+                {b.youtubeUrl && <span className="flex items-center gap-1 text-blue-600"><Play className="h-3 w-3" />Video</span>}
               </div>
             </div>
             <button onClick={e => { e.stopPropagation(); rm(b.id); }} className="p-1.5 text-red-400 hover:bg-red-50 rounded-lg"><X className="h-4 w-4" /></button>
@@ -65,6 +66,17 @@ export default function BlogEditor({ data, onSave }: P) {
               <div><label className="block text-xs font-semibold text-navy-600 mb-1.5">Full Content</label>
                 <textarea value={b.content} onChange={e => upd(b.id, { content: e.target.value })} rows={6} placeholder="Write your article..."
                   className="w-full rounded-lg border border-navy-200 px-4 py-2.5 text-sm outline-none focus:border-accent" /></div>
+              <div><label className="block text-xs font-semibold text-navy-600 mb-1.5">YouTube Video URL (Optional)</label>
+                <input value={b.youtubeUrl || ''} onChange={e => upd(b.id, { youtubeUrl: e.target.value })} placeholder="https://www.youtube.com/watch?v=..."
+                  className="w-full rounded-lg border border-navy-200 px-4 py-2.5 text-sm outline-none focus:border-accent" />
+                <p className="mt-1.5 text-xs text-navy-500">Paste the full YouTube URL (e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ)</p>
+                {b.youtubeUrl && (
+                  <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200 flex items-center gap-2 text-sm text-blue-700">
+                    <Play className="h-4 w-4" />
+                    Video preview will show in blog post
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>
