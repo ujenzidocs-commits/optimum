@@ -32,3 +32,14 @@ body.dark { --tw-bg-opacity: 1; background: linear-gradient(135deg, #1f3a5f 0%, 
 .animate-float { animation: float 3s ease-in-out infinite; }
 .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
 .animate-gradient { background-size:200% 200%; animation: gradient-x 3s ease infinite; }
+
+/* Mobile accessibility: Ensure touch targets are at least 48px */
+.touch-target { min-height: 48px; min-width: 48px; }
+
+/* Remove default focus ring on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.5);
+  }
+}

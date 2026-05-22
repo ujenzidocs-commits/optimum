@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { SiteProvider } from './context/SiteContext';
+import ErrorBoundary from './components/ErrorBoundary';
+import { OfflineBanner } from './components/OfflineBanner';
 import Navbar from './components/Navbar';
 import Hero3D from './components/Hero3D';
 import TrustBanner from './components/TrustBanner';
@@ -8,7 +10,6 @@ import FeatureShowcase from './components/FeatureShowcase';
 import Features from './components/Features';
 import HowItWorks from './components/HowItWorks';
 import Products from './components/Products';
-import Industries from './components/Industries';
 import Testimonials from './components/Testimonials';
 import Blog from './components/Blog';
 import FAQ from './components/FAQ';
@@ -55,7 +56,6 @@ function Inner() {
       <Features />
       <HowItWorks />
       <Products />
-      <Industries />
       <Testimonials />
       <Blog />
       <FAQ />
@@ -69,8 +69,11 @@ function Inner() {
 
 export default function App() {
   return (
-    <SiteProvider>
-      <Inner />
-    </SiteProvider>
+    <ErrorBoundary>
+      <SiteProvider>
+        <Inner />
+        <OfflineBanner />
+      </SiteProvider>
+    </ErrorBoundary>
   );
 }
