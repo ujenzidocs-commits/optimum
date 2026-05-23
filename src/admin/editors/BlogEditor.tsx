@@ -63,9 +63,23 @@ export default function BlogEditor({ data, onSave }: P) {
               <div><label className="block text-xs font-semibold text-navy-600 mb-1.5">Excerpt (shown on card)</label>
                 <textarea value={b.excerpt} onChange={e => upd(b.id, { excerpt: e.target.value })} rows={2} placeholder="Short summary..."
                   className="w-full rounded-lg border border-navy-200 px-4 py-2.5 text-sm outline-none focus:border-accent" /></div>
-              <div><label className="block text-xs font-semibold text-navy-600 mb-1.5">Full Content</label>
-                <textarea value={b.content} onChange={e => upd(b.id, { content: e.target.value })} rows={6} placeholder="Write your article..."
-                  className="w-full rounded-lg border border-navy-200 px-4 py-2.5 text-sm outline-none focus:border-accent" /></div>
+              <div><label className="block text-xs font-semibold text-navy-600 mb-1.5">Full Content (Readable Preview)</label>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-navy-600 mb-1.5">Edit Content</label>
+                    <textarea value={b.content} onChange={e => upd(b.id, { content: e.target.value })} rows={12} placeholder="Write your article..."
+                      className="w-full rounded-lg border border-navy-200 px-4 py-2.5 text-sm outline-none focus:border-accent font-mono text-xs" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-navy-600 mb-1.5">Live Preview</label>
+                    <div className="h-96 overflow-y-auto rounded-lg border border-navy-200 bg-navy-50 p-4">
+                      <div className="text-sm text-navy-800 leading-relaxed whitespace-pre-wrap break-words">
+                        {b.content || <span className="text-navy-400">Content preview will appear here...</span>}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div><label className="block text-xs font-semibold text-navy-600 mb-1.5">YouTube Video URL (Optional)</label>
                 <input value={b.youtubeUrl || ''} onChange={e => upd(b.id, { youtubeUrl: e.target.value })} placeholder="https://www.youtube.com/watch?v=..."
                   className="w-full rounded-lg border border-navy-200 px-4 py-2.5 text-sm outline-none focus:border-accent" />

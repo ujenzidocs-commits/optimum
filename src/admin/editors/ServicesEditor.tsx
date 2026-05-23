@@ -66,9 +66,23 @@ export default function ServicesEditor({ data, onSave }: P) {
                     {iconOptions.map(ic => <option key={ic} value={ic}>{ic}</option>)}
                   </select></div>
               </div>
-              <div><label className="block text-xs font-semibold text-navy-600 mb-1.5">Description</label>
-                <textarea value={s.desc} onChange={e => upd(s.id, { desc: e.target.value })} rows={3}
-                  className="w-full rounded-lg border border-navy-200 px-4 py-2.5 text-sm outline-none focus:border-accent" /></div>
+              <div><label className="block text-xs font-semibold text-navy-600 mb-1.5">Description (Readable Preview)</label>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-navy-600 mb-1.5">Edit Description</label>
+                    <textarea value={s.desc} onChange={e => upd(s.id, { desc: e.target.value })} rows={8} placeholder="Service description..."
+                      className="w-full rounded-lg border border-navy-200 px-4 py-2.5 text-sm outline-none focus:border-accent font-mono text-xs" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-navy-600 mb-1.5">Live Preview</label>
+                    <div className="h-52 overflow-y-auto rounded-lg border border-navy-200 bg-navy-50 p-4">
+                      <div className="text-sm text-navy-800 leading-relaxed">
+                        {s.desc || <span className="text-navy-400">Description preview will appear here...</span>}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div><label className="block text-xs font-semibold text-navy-600 mb-2">Features</label>
                 <div className="space-y-2">
                   {s.features.map((f, fi) => (

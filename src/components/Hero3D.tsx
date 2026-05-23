@@ -247,76 +247,79 @@ export default function Hero3D() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column - 3D Visual Element */}
+          {/* Right Column - Business Growth Chart */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="hidden lg:flex items-center justify-center"
-            style={{ perspective: "1000px" }}
           >
-            <motion.div
-              animate={{
-                rotateX: rotateX,
-                rotateY: rotateY,
-              }}
-              transition={{ type: "spring", stiffness: 50, damping: 20 }}
-              className="relative w-full aspect-square max-w-md"
-              style={{
-                transformStyle: 'preserve-3d',
-                perspective: '1200px'
-              }}
-            >
-              {/* 3D Card Background */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-blue-600/20 rounded-3xl border border-blue-400/30 backdrop-blur-xl shadow-2xl shadow-blue-500/20"
-                style={{
-                  transformStyle: 'preserve-3d',
-                  transform: 'translateZ(100px)'
-                }}
-              />
+            <div className="w-full max-w-md bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-blue-600/10 rounded-3xl border border-blue-400/30 backdrop-blur-xl shadow-2xl shadow-blue-500/20 p-8">
+              {/* Chart Title */}
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-white mb-2">Growth Analytics</h3>
+                <p className="text-sm text-blue-300">Business Performance Metrics</p>
+              </div>
 
-              {/* 3D Inner layers */}
-              {[...Array(3)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  animate={{
-                    rotateZ: [0, 360],
-                  }}
-                  transition={{
-                    duration: 15 + i * 5,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                  className={`absolute inset-${4 + i * 4} rounded-3xl border`}
-                  style={{
-                    borderColor: i === 0 ? 'rgba(59, 130, 246, 0.3)' : i === 1 ? 'rgba(168, 85, 247, 0.2)' : 'rgba(59, 130, 246, 0.2)',
-                    transform: `translateZ(${80 - i * 30}px) rotateZ(${i * 45}deg)`,
-                  }}
-                />
-              ))}
+              {/* Animated Bar Chart */}
+              <div className="space-y-6">
+                {[
+                  { label: 'Clients', value: 85, color: 'from-yellow-400 to-yellow-500' },
+                  { label: 'Efficiency', value: 92, color: 'from-blue-400 to-blue-500' },
+                  { label: 'Compliance', value: 98, color: 'from-green-400 to-green-500' },
+                  { label: 'ROI', value: 88, color: 'from-pink-400 to-pink-500' }
+                ].map((metric, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 + i * 0.15, duration: 0.6 }}
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-sm font-semibold text-white">{metric.label}</span>
+                      <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.4 + i * 0.15, duration: 0.6 }}
+                        className="text-sm font-bold text-yellow-400"
+                      >
+                        {metric.value}%
+                      </motion.span>
+                    </div>
+                    <div className="h-3 bg-navy-800/50 rounded-full overflow-hidden border border-blue-400/20">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${metric.value}%` }}
+                        transition={{ delay: 0.3 + i * 0.15, duration: 1, ease: "easeOut" }}
+                        className={`h-full bg-gradient-to-r ${metric.color} rounded-full shadow-lg`}
+                        style={{
+                          boxShadow: `0 0 20px rgba(250, 204, 21, 0.5)`
+                        }}
+                      />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
 
-              {/* Center floating element */}
+              {/* Stats Footer */}
               <motion.div
-                animate={{
-                  y: [-20, 20, -20],
-                  rotateZ: [0, 360]
-                }}
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="absolute inset-0 flex items-center justify-center"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1, duration: 0.6 }}
+                className="mt-8 pt-6 border-t border-blue-400/20"
               >
-                <motion.div
-                  className="w-32 h-32 bg-gradient-to-br from-yellow-400/20 to-blue-600/20 rounded-2xl border border-yellow-400/50 flex items-center justify-center"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <span className="text-5xl">✨</span>
-                </motion.div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-yellow-400">500+</p>
+                    <p className="text-xs text-blue-300 mt-1">Active Users</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-blue-400">99.9%</p>
+                    <p className="text-xs text-blue-300 mt-1">Uptime SLA</p>
+                  </div>
+                </div>
               </motion.div>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>

@@ -82,9 +82,262 @@ export const defaultData: SiteData = {
     {id:'8',name:'Education & NGOs',icon:'GraduationCap',desc:'Fee management, donor tracking, and grant accounting.'},
   ],
   blogs: [
-    {id:'1',title:'Why Every Kenyan Business Needs Tally Prime in 2025',excerpt:'Discover how Tally Prime is transforming business operations across Kenya with automated accounting, KRA compliance, and real-time reporting.',date:'2025-01-15',category:'Insights',readTime:'5 min',content:'Tally Prime has become the backbone of business operations in Kenya...'},
-    {id:'2',title:'Complete Guide to KRA e-Filing with Tally Prime',excerpt:'Step-by-step guide to setting up and filing your KRA returns directly from Tally Prime. Save time and avoid penalties.',date:'2025-02-01',category:'Tutorial',readTime:'8 min',content:'Filing KRA returns can be complex, but Tally Prime simplifies the entire process...'},
-    {id:'3',title:'Tally Prime Silver vs Gold: Which Edition Is Right for You?',excerpt:'A detailed comparison of Tally Prime Silver and Gold editions to help you choose the perfect solution for your business size.',date:'2025-02-15',category:'Comparison',readTime:'6 min',content:'Choosing between Tally Prime Silver and Gold depends on your business needs...'},
+    {id:'1',title:'Why Every Kenyan Business Needs Tally Prime in 2025',excerpt:'Discover how Tally Prime is transforming business operations across Kenya with automated accounting, KRA compliance, and real-time reporting.',date:'2025-01-15',category:'Insights',readTime:'5 min',content:`Tally Prime has become the backbone of business operations across Kenya. Whether you're a small retail shop, a manufacturing facility, or a growing services company, the need for accurate financial management and KRA compliance is non-negotiable.
+
+Why should your business invest in Tally Prime in 2025?
+
+1. KRA Compliance Made Easy
+Kenya's tax environment demands precision. Tally Prime simplifies VAT calculations, PAYE processing, and e-filing integration. The eTIMS module ensures real-time invoice tracking, and automated compliance reports keep your business audit-ready. No more manual calculations or missed deadlines.
+
+2. Real-Time Business Insights
+Stop relying on spreadsheets. Tally Prime provides instant access to your:
+- Daily sales and expense reports
+- Inventory levels across multiple locations
+- Cash flow projections
+- Profit & loss statements
+- Customer and supplier analyses
+
+Decision-making becomes data-driven, not guesswork-based.
+
+3. Inventory Management at Scale
+Whether you have 1 warehouse or 10 branches, Tally Prime tracks inventory in real-time. Automated reorder points prevent stockouts, batch management prevents expired stock, and multi-location visibility ensures optimal stock distribution.
+
+4. Automated Payroll Processing
+Calculating payroll manually is error-prone and time-consuming. Tally Prime automates:
+- Salary calculations
+- PAYE, NHIF, NSSF, and Housing Levy deductions
+- Statutory compliance
+- Leave management
+- Payslip generation
+
+Your HR team gains 3+ hours daily that can be redirected to strategic work.
+
+5. Cost Reduction & Efficiency
+Implementing Tally Prime typically reduces operational costs by 15-25% through:
+- Reduced data entry errors (95% fewer manual entries)
+- Faster month-end closing (from 5 days to 1 day)
+- Minimized accounting staff requirements
+- Fewer compliance penalties and fines
+
+6. Scalability Built-In
+As your business grows, Tally Prime grows with you. Multi-user access, role-based controls, and unlimited transaction capacity ensure you're never outgrowing your system.
+
+The Bottom Line
+In 2025, manual accounting is not just inefficient—it's risky. Tally Prime eliminates operational friction, ensures compliance, and gives you the visibility needed to scale confidently.
+
+Ready to transform your business? The businesses that embrace Tally Prime this year will be the ones leading their industries next year.`},
+    {id:'2',title:'Complete Guide to KRA e-Filing with Tally Prime',excerpt:'Step-by-step guide to setting up and filing your KRA returns directly from Tally Prime. Save time and avoid penalties.',date:'2025-02-01',category:'Tutorial',readTime:'8 min',content:`KRA compliance can be intimidating, but with Tally Prime, it's surprisingly straightforward. This guide walks you through the entire e-filing process.
+
+What You Need Before Starting
+✓ Active KRA PIN
+✓ Valid iTax login credentials
+✓ Tally Prime configured with your business details
+✓ Up-to-date transaction records (should already be in Tally Prime)
+
+Step 1: Enable eTIMS in Tally Prime
+Navigate to F11 (Features) and ensure eTIMS is activated. This enables invoice-level tracking required by KRA.
+
+Step 2: Configure Your Invoice Format
+All invoices must include:
+- Sequential numbering
+- Buyer and seller details
+- Item descriptions with quantities and rates
+- Total amount and tax amount
+- Invoice date
+
+Tally Prime automatically formats this correctly when eTIMS is enabled.
+
+Step 3: Generate VAT Reports
+From the Gateway of Tally, go to:
+Reports → Tax Analysis → VAT Reports
+
+Review your:
+- Input VAT (VAT paid on purchases)
+- Output VAT (VAT collected on sales)
+- Net VAT payable
+
+Tally Prime calculates this automatically based on your invoices.
+
+Step 4: Export Data for iTax
+Tally Prime integrates with KRA's iTax system. The process is automatic:
+1. Period selection (monthly or quarterly)
+2. One-click export to iTax format
+3. Upload directly from Tally Prime to KRA portal
+
+Step 5: File Your Returns
+Through iTax:
+1. Log in with your credentials
+2. Import the exported Tally Prime data
+3. Review calculations
+4. File returns
+5. Keep acknowledgment receipt
+
+Common Mistakes to Avoid
+❌ Incomplete invoice details (missing buyer PIN)
+❌ Manual invoice adjustments without proper vouchers
+❌ Mixing personal and business transactions
+❌ Missing supporting documents
+❌ Filing late (penalties increase after the due date)
+
+Pro Tips for Smooth Filing
+✓ File on the 10th of the following month (not on deadline)
+✓ Keep digital copies of all invoices for 5 years
+✓ Reconcile bank statements monthly
+✓ Run reconciliation reports weekly
+✓ Maintain a VAT register separate from invoices
+
+Troubleshooting Common Issues
+If your VAT doesn't match:
+1. Check opening inventory values
+2. Verify all purchases are recorded
+3. Confirm VAT rates (16% standard, 0% exempt items)
+4. Check for duplicate entries
+
+If eTIMS upload fails:
+1. Verify internet connection
+2. Check invoice format compliance
+3. Ensure all mandatory fields are populated
+4. Contact your Tally partner if issue persists
+
+After Filing
+Keep records of:
+- Filing confirmation from KRA
+- VAT payment proof
+- Reconciliation reports
+- Monthly bank statements
+
+The entire process, once set up correctly, takes just 2-3 hours per month. Tally Prime handles the heavy lifting—you just need to ensure accurate data entry daily.
+
+Need help with your first filing? Our team can guide you through every step.`},
+    {id:'3',title:'Tally Prime Silver vs Gold: Which Edition Is Right for You?',excerpt:'A detailed comparison of Tally Prime Silver and Gold editions to help you choose the perfect solution for your business size.',date:'2025-02-15',category:'Comparison',readTime:'6 min',content:`Choosing between Tally Prime Silver and Gold is one of the first decisions you'll make. This comprehensive comparison helps you pick the right fit for your business.
+
+Quick Comparison Table:
+
+Feature                  | Silver Edition    | Gold Edition
+User Licenses           | Single User       | Unlimited Users
+Network Access          | Standalone Only   | Yes (Multi-Location)
+Price                   | KES 57,600 +VAT   | KES 172,800 +VAT
+Invoice Limit           | Unlimited         | Unlimited
+Transactions            | Unlimited         | Unlimited
+Remote Access           | Not Built-in      | Yes (with setup)
+Backup Options          | Local Backup      | Cloud Ready
+Support Tier            | Email/Chat        | Priority Support
+
+Tally Prime Silver: Best For
+
+✓ Small businesses with 1-3 employees handling finances
+✓ Sole traders and freelancers
+✓ Startup companies testing the market
+✓ Shops and trading businesses
+✓ Service providers (consultants, plumbers, electricians)
+✓ One-person operations that need professional accounting
+
+Real-World Silver User Profile:
+Meet Sarah, a retail shop owner. She has one checkout counter, manages inventory herself, and needs basic accounting for tax filing. Silver handles everything: sales tracking, inventory, payroll (if needed), and KRA compliance. Cost savings matter, and she'll upgrade later if the business scales.
+
+Tally Prime Gold: Best For
+
+✓ Multi-location businesses (2+ branches)
+✓ Growing companies with 5+ employees
+✓ Manufacturing facilities
+✓ Wholesale and distribution businesses
+✓ Retail chains
+✓ Organizations requiring remote access
+✓ Businesses planning significant growth
+
+Real-World Gold User Profile:
+Meet John, who owns 4 retail outlets. Each branch manager needs access to the system. Head office needs consolidated reporting. Teams work from different locations. Gold's multi-user, multi-location capabilities are essential. The higher investment (KES 172,800) is justified by efficiency gains and consolidated control.
+
+Key Feature Deep-Dives
+
+1. Single User vs. Multi-User
+Silver: One person at a time
+- Perfect if you handle all accounting yourself
+- Safe from concurrent data access issues
+- No additional setup needed
+
+Gold: Many people simultaneously
+- Branch managers can enter their sales
+- Multiple departments work in parallel
+- Headquarters has real-time consolidated view
+
+2. Network Access (Local Area Network)
+Silver: Standalone computer only
+- Good for security (data stays on your computer)
+- No networking complexity
+- Not suitable for multi-location setups
+
+Gold: Connects multiple computers
+- All branches on same network
+- Real-time data synchronization
+- Centralized database
+
+3. Remote Access
+Silver: Not available
+- You must be at the office
+
+Gold: Built-in remote capability
+- Access from home, branch, or client site
+- VPN-ready
+- Perfect for post-COVID flexible work
+
+4. Cloud Integration
+Silver: Basic cloud backup guidance
+- Manual backup procedures
+- You manage the cloud storage
+
+Gold: Cloud-ready architecture
+- Automated backup compatibility
+- Cloud Sync integration options
+- Less manual management
+
+Cost-Benefit Analysis
+
+Silver Math:
+Initial cost: KES 57,600 +VAT = KES 67,392
+Perfect if:
+- You have 1 location
+- You manage finances personally
+- Annual revenue < KES 5 million
+- Team won't expand
+
+Gold Math:
+Initial cost: KES 172,800 +VAT = KES 200,256
+ROI achieved when:
+- Operating 2+ branches (saves KES 5,000-10,000/branch in admin costs)
+- Managing 5+ team members (saves 20+ hours/month in coordination)
+- Annual revenue > KES 10 million
+- Planned growth within 2 years
+
+The Growth Path
+
+Most businesses follow this journey:
+Year 1: Silver Edition (establish systems, learn Tally)
+Year 2-3: Gold Edition (scale operations, add branches)
+Year 5+: Enterprise/Plus (advanced analytics, cloud hosting)
+
+Switching Costs:
+Upgrading from Silver to Gold later requires:
+- One-time upgrade cost: KES 115,200 (difference)
+- Data migration: Usually 4-6 hours
+- Re-training: 2-4 hours for new features
+
+Making Your Decision
+
+Ask yourself:
+1. How many people will use this system? (1-2 = Silver; 3+ = Gold)
+2. Do you have multiple locations? (Yes = Gold)
+3. What's your annual turnover? (<KES 5M = Silver; >KES 10M = Gold)
+4. Are you planning to expand within 2 years? (Yes = Gold)
+5. Does team need remote access? (Yes = Gold)
+
+If you answered yes to 2+ questions above #2, choose Gold. Otherwise, Silver is perfect.
+
+The Bottom Line
+
+Don't overthink it. Both Silver and Gold are excellent investments. Silver gets you started affordably. Gold is when you've outgrown single-user limitations. Many successful businesses started with Silver and upgraded—that's perfectly normal.
+
+Ready to get started? Our team can help you choose and implement the right edition for your situation.`},
   ],
   leads: [],
 };

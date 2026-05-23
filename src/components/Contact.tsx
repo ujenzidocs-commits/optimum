@@ -4,6 +4,7 @@ import { MapPin, Phone, Mail, Clock, Send, CheckCircle, MessageCircle, Smartphon
 import { useSite } from '../context/SiteContext';
 import { useOnlineStatus } from './OfflineBanner';
 import { validateForm, getFieldError, type FormData, type ValidationError } from '../utils/validation';
+import { fbSet } from '../firebase/config';
 import type { Lead } from '../data/siteData';
 
 export default function Contact() {
@@ -27,7 +28,7 @@ export default function Contact() {
 
   const set = (k: string, v: string) => setForm({ ...form, [k]: v });
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrors([]);
     setServerError(null);
@@ -48,37 +49,33 @@ export default function Contact() {
     setLoading(true);
 
     try {
-      // Save locally
+      // Create lead object
       const lead: Lead = {
         ...form,
         id: Date.now().toString(),
         createdAt: new Date().toISOString(),
         status: 'New',
       };
-      update({ ...data, leads: [...data.leads, lead] });
 
-      // Send email via Formspree
-      const formData = new FormData();
-      formData.append('name', form.name);
-      formData.append('email', form.email);
-      formData.append('phone', form.phone);
-      formData.append('company', form.company);
-      formData.append('businessType', form.businessType);
-      formData.append('demoDate', form.demoDate);
-      formData.append('currentSoftware', form.currentSoftware);
-      formData.append('message', form.message);
-
-      const response = await fetch('https://formspree.io/f/mvzyoyzz', {
-        method: 'POST',
-        body: formData,
+      // Save to Firebase Realtime Database
+      await fbSet(`leads/${lead.id}`, {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        company: form.company,
+        businessType: form.businessType,
+        demoDate: form.demoDate,
+        currentSoftware: form.currentSoftware,
+        message: form.message,
+        createdAt: lead.createdAt,
+        status: 'New',
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to send email. Please try again.');
-      }
+      // Save locally in context
+      update({ ...data, leads: [...data.leads, lead] });
 
-      // Send confirmation email to user
-      await sendConfirmationEmail(form.email, form.name);
+      // Send email notification
+      await sendEmailNotification(form);
 
       setOk(true);
       setForm({
@@ -93,7 +90,7 @@ export default function Contact() {
       });
       setTimeout(() => setOk(false), 5000);
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'An unexpected error occurred';
+      const message = error instanceof Error ? error.message : 'Failed to submit form. Please try again.';
       setServerError(message);
       console.error('Form submission error:', error);
     } finally {
@@ -101,23 +98,36 @@ export default function Contact() {
     }
   };
 
-  const sendConfirmationEmail = async (email: string, name: string) => {
+  const sendEmailNotification = async (formData: FormData) => {
     try {
-      await fetch('https://formspree.io/f/mvzyoyzz', {
+      // Send email via backend API (optional - configure your email service)
+      const response = await fetch('/api/send-email', {
         method: 'POST',
-        body: new FormData(
-          Object.assign(document.createElement('form'), {
-            innerHTML: `
-              <input type="hidden" name="email_subject" value="Demo Request Confirmation" />
-              <input type="hidden" name="to" value="${email}" />
-              <input type="hidden" name="message" value="Hi ${name},\n\nThank you for requesting a demo! We've received your request and will contact you within 24 hours.\n\nBest regards,\nOptimum Prime Solutions Team" />
-            `,
-          })
-        ),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: formData.email,
+          subject: 'Demo Request Received - Optimum Prime Solutions',
+          html: `
+            <h2>Thank you for your demo request!</h2>
+            <p>Hi ${formData.name},</p>
+            <p>We've received your request for a Tally Prime demo. Our team will contact you within 24 hours.</p>
+            <p><strong>Your Details:</strong></p>
+            <ul>
+              <li>Company: ${formData.company || 'Not provided'}</li>
+              <li>Phone: ${formData.phone}</li>
+              <li>Preferred Date: ${formData.demoDate || 'Not specified'}</li>
+            </ul>
+            <p>Best regards,<br>Optimum Prime Solutions Team</p>
+          `
+        })
       });
-    } catch {
-      // Confirmation email failed silently - main request was sent
-      console.warn('Failed to send confirmation email');
+
+      if (!response.ok) {
+        console.warn('Email notification failed - form was saved to database');
+      }
+    } catch (error) {
+      // Email failed but form was saved - this is okay
+      console.warn('Could not send email notification:', error);
     }
   };
 
@@ -200,7 +210,7 @@ export default function Contact() {
                 <div className="mt-6 flex flex-col items-center py-12 text-center">
                   <CheckCircle className="h-14 sm:h-16 w-14 sm:w-16 text-green-500" />
                   <h4 className="mt-4 text-lg sm:text-xl font-bold text-navy-900 dark:text-white">Request Submitted!</h4>
-                  <p className="mt-2 text-sm text-navy-600 dark:text-navy-300">We've sent you a confirmation email. Our team will contact you within 24 hours.</p>
+                  <p className="mt-2 text-sm text-navy-600 dark:text-navy-300">Thank you! Our team will contact you within 24 hours.</p>
                 </div>
               ) : (
                 <form onSubmit={submit} className="mt-6 space-y-4">
@@ -222,6 +232,7 @@ export default function Contact() {
                             {error && <span className="text-red-500 ml-1">✗</span>}
                           </label>
                           <input
+                            name={f.k}
                             type={f.t}
                             value={(form as Record<string, string>)[f.k]}
                             onChange={(e) => set(f.k, e.target.value)}
@@ -245,6 +256,7 @@ export default function Contact() {
                       {getFieldError(errors, 'message') && <span className="text-red-500 ml-1">✗</span>}
                     </label>
                     <textarea
+                      name="message"
                       value={form.message}
                       onChange={(e) => set('message', e.target.value)}
                       rows={3}

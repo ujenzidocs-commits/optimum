@@ -38,9 +38,23 @@ export default function IndustriesEditor({ data, onSave }: P) {
                 {iconOptions.map(ic => <option key={ic} value={ic}>{ic}</option>)}
               </select></div>
           </div>
-          <div><label className="block text-xs font-semibold text-navy-600 mb-1.5">Description</label>
-            <input value={ind.desc} onChange={e => upd(ind.id, { desc: e.target.value })} placeholder="Brief description..."
-              className="w-full rounded-lg border border-navy-200 px-3 py-2.5 text-sm outline-none focus:border-accent" /></div>
+          <div><label className="block text-xs font-semibold text-navy-600 mb-1.5">Description (Readable Preview)</label>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-navy-600 mb-1.5">Edit Description</label>
+                <textarea value={ind.desc} onChange={e => upd(ind.id, { desc: e.target.value })} placeholder="Brief description..." rows={6}
+                  className="w-full rounded-lg border border-navy-200 px-3 py-2.5 text-sm outline-none focus:border-accent font-mono text-xs" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-navy-600 mb-1.5">Live Preview</label>
+                <div className="h-40 overflow-y-auto rounded-lg border border-navy-200 bg-navy-50 p-3">
+                  <div className="text-sm text-navy-800 leading-relaxed">
+                    {ind.desc || <span className="text-navy-400">Preview will appear here...</span>}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       ))}
 

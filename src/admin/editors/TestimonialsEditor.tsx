@@ -46,9 +46,23 @@ export default function TestimonialsEditor({ data, onSave }: P) {
               <input value={t.company} onChange={e => upd(t.id, { company: e.target.value })} placeholder="Company Ltd"
                 className="w-full rounded-lg border border-navy-200 px-3 py-2.5 text-sm outline-none focus:border-accent" /></div>
           </div>
-          <div><label className="block text-xs font-semibold text-navy-600 mb-1.5">Testimonial Text</label>
-            <textarea value={t.text} onChange={e => upd(t.id, { text: e.target.value })} rows={3} placeholder="What the client said..."
-              className="w-full rounded-lg border border-navy-200 px-4 py-2.5 text-sm outline-none focus:border-accent" /></div>
+          <div><label className="block text-xs font-semibold text-navy-600 mb-1.5">Testimonial Text (Readable Preview)</label>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-navy-600 mb-1.5">Edit Text</label>
+                <textarea value={t.text} onChange={e => upd(t.id, { text: e.target.value })} rows={8} placeholder="What the client said..."
+                  className="w-full rounded-lg border border-navy-200 px-4 py-2.5 text-sm outline-none focus:border-accent font-mono text-xs" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-navy-600 mb-1.5">Live Preview</label>
+                <div className="h-52 overflow-y-auto rounded-lg border border-navy-200 bg-navy-50 p-4">
+                  <div className="text-sm text-navy-800 leading-relaxed italic">
+                    {t.text ? `"${t.text}"` : <span className="text-navy-400">Preview will appear here...</span>}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div><label className="block text-xs font-semibold text-navy-600 mb-2">Rating</label>
             <div className="flex gap-1">{[1, 2, 3, 4, 5].map(s => (
               <button key={s} onClick={() => upd(t.id, { rating: s })}>

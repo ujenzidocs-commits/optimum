@@ -54,19 +54,37 @@ export default function ContactEditor({ data, onSave }: P) {
           <h3 className="text-base font-bold text-navy-900 mb-4 flex items-center gap-2">
             <Icon className="h-5 w-5 text-accent" />{label}
           </h3>
-          <div className="space-y-2.5">
-            {c[key].map((val: string, i: number) => (
-              <div key={i} className="flex gap-2">
-                <input value={val} onChange={e => updList(key, i, e.target.value)} placeholder={placeholder}
-                  className="flex-1 rounded-lg border border-navy-200 px-4 py-2.5 text-sm outline-none focus:border-accent" />
-                <button onClick={() => rmFromList(key, i)}
-                  className="rounded-lg p-2 text-red-400 hover:bg-red-50 transition"><X className="h-4 w-4" /></button>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2.5">
+              <label className="block text-xs font-semibold text-navy-600">Edit {label}</label>
+              {c[key].map((val: string, i: number) => (
+                <div key={i} className="flex gap-2">
+                  <input value={val} onChange={e => updList(key, i, e.target.value)} placeholder={placeholder}
+                    className="flex-1 rounded-lg border border-navy-200 px-4 py-2.5 text-sm outline-none focus:border-accent" />
+                  <button onClick={() => rmFromList(key, i)}
+                    className="rounded-lg p-2 text-red-400 hover:bg-red-50 transition"><X className="h-4 w-4" /></button>
+                </div>
+              ))}
+              <button onClick={() => addToList(key)}
+                className="flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-accent-dark transition">
+                <Plus className="h-4 w-4" />Add {label.replace(/s$/, '').replace(/es$/, '')}
+              </button>
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-navy-600 mb-2">Live Preview</label>
+              <div className="rounded-lg border border-navy-200 bg-navy-50 p-4 space-y-2">
+                {c[key].filter((v: string) => v).length > 0 ? (
+                  c[key].filter((v: string) => v).map((val: string, i: number) => (
+                    <div key={i} className="text-sm text-navy-800 flex items-center gap-2">
+                      <Icon className="h-4 w-4 text-accent flex-shrink-0" />
+                      <span>{val}</span>
+                    </div>
+                  ))
+                ) : (
+                  <span className="text-sm text-navy-400">Preview will appear here...</span>
+                )}
               </div>
-            ))}
-            <button onClick={() => addToList(key)}
-              className="flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-accent-dark transition">
-              <Plus className="h-4 w-4" />Add {label.replace(/s$/, '').replace(/es$/, '')}
-            </button>
+            </div>
           </div>
         </div>
       ))}
