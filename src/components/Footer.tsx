@@ -1,5 +1,6 @@
 import { ArrowUp, Mail, MapPin, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import Logo from './Logo';
 import { useSite } from '../context/SiteContext';
 
 const links = [
@@ -22,7 +23,9 @@ export default function Footer() {
         <div className="grid gap-8 lg:grid-cols-[1.4fr_0.9fr_0.9fr_1fr]">
           <div className="space-y-5">
             <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-white">OP</div>
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-white">
+                <Logo className="h-8 w-auto" variant="icon" />
+              </div>
               <div>
                 <p className="text-lg font-semibold text-slate-950">Optimum Prime</p>
                 <p className="text-xs uppercase tracking-[0.35em] text-slate-500">Solutions</p>

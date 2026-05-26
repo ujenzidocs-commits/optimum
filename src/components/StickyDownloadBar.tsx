@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Download, X, ArrowRight } from 'lucide-react';
+import TallyLogo from './TallyLogo';
 
 export default function StickyDownloadBar() {
   const [show, setShow] = useState(false);
@@ -33,7 +34,10 @@ export default function StickyDownloadBar() {
                 <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-slate-900 text-white">
                   <Download className="h-4 w-4" />
                 </div>
-                <span>Try TallyPrime free — Education Mode, no license needed.</span>
+                <div className="inline-flex items-center gap-2">
+                  <TallyLogo className="h-5 w-auto" />
+                  <span>Try TallyPrime free — Education Mode, no license needed.</span>
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <a
