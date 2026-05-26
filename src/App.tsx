@@ -6,12 +6,9 @@ import { OfflineBanner } from './components/OfflineBanner';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
-import WhatsAppButton from './components/WhatsAppButton';
 import StickyDownloadBar from './components/StickyDownloadBar';
 import AdminLogin from './admin/AdminLogin';
 import AdminLayout from './admin/AdminLayout';
-
-// Import pages
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import FeaturesPage from './pages/FeaturesPage';
@@ -43,31 +40,31 @@ function Inner() {
     return () => window.removeEventListener('hashchange', check);
   }, []);
 
-  if (view === 'login') 
+  if (view === 'login')
     return (
-      <AdminLogin 
-        onLogin={() => { 
-          sessionStorage.setItem('ops_admin', '1'); 
-          localStorage.setItem('ops_admin', '1'); 
-          setView('admin'); 
-        }} 
+      <AdminLogin
+        onLogin={() => {
+          sessionStorage.setItem('ops_admin', '1');
+          localStorage.setItem('ops_admin', '1');
+          setView('admin');
+        }}
       />
     );
-  
-  if (view === 'admin') 
+
+  if (view === 'admin')
     return (
-      <AdminLayout 
-        onLogout={() => { 
-          sessionStorage.removeItem('ops_admin'); 
-          localStorage.removeItem('ops_admin'); 
-          window.location.hash = ''; 
-          setView('site'); 
-        }} 
+      <AdminLayout
+        onLogout={() => {
+          sessionStorage.removeItem('ops_admin');
+          localStorage.removeItem('ops_admin');
+          window.location.hash = '';
+          setView('site');
+        }}
       />
     );
 
   return (
-    <div className="min-h-screen bg-navy-950 text-white flex flex-col">
+    <div className="min-h-screen bg-slate-50 text-slate-950 flex flex-col">
       <StickyDownloadBar />
       <Navbar />
       <main className="flex-grow pt-18">
@@ -84,7 +81,6 @@ function Inner() {
       </main>
       <Footer />
       <Chatbot />
-      <WhatsAppButton />
     </div>
   );
 }

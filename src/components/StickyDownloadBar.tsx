@@ -12,6 +12,7 @@ export default function StickyDownloadBar() {
       setShow(window.scrollY > 800);
     };
     window.addEventListener('scroll', handleScroll);
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, [dismissed]);
 
@@ -24,37 +25,27 @@ export default function StickyDownloadBar() {
           initial={{ y: -80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0 }}
-          className="fixed top-0 inset-x-0 z-[60] bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900 border-b border-white/10 shadow-xl"
+          className="fixed top-0 inset-x-0 z-[60] border-b border-slate-200 bg-white shadow-xl"
         >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-11">
+            <div className="flex flex-wrap items-center justify-between gap-4 py-3 text-sm text-slate-700">
               <div className="flex items-center gap-3">
-                <div className="hidden sm:flex items-center gap-2">
-                  <div className="h-6 w-6 rounded bg-yellow-400/20 flex items-center justify-center">
-                    <Download className="h-3.5 w-3.5 text-yellow-600" />
-                  </div>
-                  <span className="text-xs font-medium text-white/80">
-                    Try TallyPrime free — Education Mode, no license needed
-                  </span>
+                <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-slate-900 text-white">
+                  <Download className="h-4 w-4" />
                 </div>
-                <span className="sm:hidden text-xs font-medium text-white/80">
-                  Try TallyPrime free
-                </span>
+                <span>Try TallyPrime free — Education Mode, no license needed.</span>
               </div>
               <div className="flex items-center gap-3">
                 <a
                   href="https://tallysolutions.com/ssa/download/"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-1.5 rounded-lg bg-yellow-500 px-3.5 py-1.5 text-[11px] font-bold text-white hover:bg-yellow-500-dark transition"
+                  className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-800"
                 >
                   Download Now
                   <ArrowRight className="h-3 w-3" />
                 </a>
-                <button
-                  onClick={() => setDismissed(true)}
-                  className="p-1 text-white/40 hover:text-white transition"
-                >
+                <button onClick={() => setDismissed(true)} className="rounded-full p-2 text-slate-500 transition hover:text-slate-900">
                   <X className="h-4 w-4" />
                 </button>
               </div>

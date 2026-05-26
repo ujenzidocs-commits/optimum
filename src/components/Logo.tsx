@@ -3,14 +3,10 @@ import { motion } from 'framer-motion';
 interface LogoProps {
   className?: string;
   variant?: 'full' | 'icon';
-  isDark?: boolean;
 }
 
-export default function Logo({ className = 'h-10 w-auto', variant = 'full', isDark = false }: LogoProps) {
-  const bgColor = isDark ? '#0a1929' : '#ffffff';
-  const cloudColor1 = '#2563eb';
-  const cloudColor2 = '#0ea5e9';
-  const textColor = isDark ? '#ffffff' : '#102a43';
+export default function Logo({ className = 'h-10 w-auto', variant = 'full' }: LogoProps) {
+  const fillColor = '#111827';
 
   return (
     <motion.svg
@@ -21,78 +17,18 @@ export default function Logo({ className = 'h-10 w-auto', variant = 'full', isDa
       whileTap={{ scale: 0.95 }}
       transition={{ duration: 0.3 }}
     >
-      <defs>
-        {/* Gradient for cloud */}
-        <linearGradient id="cloudGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style={{ stopColor: cloudColor1, stopOpacity: 1 }} />
-          <stop offset="100%" style={{ stopColor: cloudColor2, stopOpacity: 1 }} />
-        </linearGradient>
-
-        {/* Gradient for text - Gold to Blue blend */}
-        <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" style={{ stopColor: '#ffd700', stopOpacity: 1 }} />
-          <stop offset="100%" style={{ stopColor: '#2563eb', stopOpacity: 1 }} />
-        </linearGradient>
-
-        {/* Shadow filter */}
-        <filter id="shadowFilter">
-          <feDropShadow dx="0" dy="4" stdDeviation="6" floodOpacity="0.15" floodColor="#102a43" />
-        </filter>
-      </defs>
-
-      {/* Cloud icon with download arrow */}
-      <g filter="url(#shadowFilter)">
-        {/* Cloud shape */}
-        <path
-          d="M 45 20 Q 35 20 30 28 Q 18 28 16 40 Q 16 52 25 58 L 65 58 Q 76 58 76 47 Q 76 36 68 32 Q 65 22 57 20 Q 51 15 45 15 Q 36 15 32 20"
-          fill="url(#cloudGradient)"
-          stroke="url(#cloudGradient)"
-          strokeWidth="0.5"
-          opacity="0.95"
-        />
-
-        {/* Download arrow - vertical line */}
-        <line x1="50" y1="30" x2="50" y2="48" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-
-        {/* Download arrow - top part */}
-        <path
-          d="M 50 48 L 45 42 M 50 48 L 55 42"
-          stroke="white"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-
-        {/* Base line */}
-        <line x1="38" y1="52" x2="62" y2="52" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
+      <g fill="none" stroke={fillColor} strokeWidth="2">
+        <circle cx="42" cy="36" r="22" fill="rgba(17,24,39,0.08)" />
+        <path d="M 30 38 C 30 30 38 24 46 24 C 54 24 61 29 61 38 C 61 48 52 58 46 58 C 38 58 30 48 30 38 Z" fill={fillColor} />
+        <path d="M 44 25 L 44 46 L 54 46" stroke="white" strokeWidth="3" />
+        <path d="M 44 46 L 51 39" stroke="white" strokeWidth="3" />
       </g>
-
-      {/* Company name - "Optimum" */}
       {variant === 'full' && (
         <>
-          <text
-            x="85"
-            y="48"
-            fontSize="32"
-            fontWeight="700"
-            fontFamily="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-            fill="url(#textGradient)"
-            letterSpacing="-0.5"
-          >
+          <text x="84" y="42" fontSize="32" fontWeight="700" fontFamily="'Inter', system-ui, sans-serif" fill={fillColor}>
             Optimum
           </text>
-
-          {/* Tagline - "PRIME SOLUTIONS LTD" */}
-          <text
-            x="85"
-            y="68"
-            fontSize="11"
-            fontWeight="600"
-            fontFamily="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-            fill="#243b53"
-            letterSpacing="1.3"
-          >
+          <text x="84" y="64" fontSize="11" fontWeight="600" fontFamily="'Inter', system-ui, sans-serif" fill="#475569" letterSpacing="1.5">
             PRIME SOLUTIONS LTD
           </text>
         </>

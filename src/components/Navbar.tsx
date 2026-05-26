@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Phone, Moon, Sun } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
 import Logo from './Logo';
 
 const links = [
@@ -17,89 +17,61 @@ const links = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [dark, setDark] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    const h = () => setScrolled(window.scrollY > 60);
-    window.addEventListener('scroll', h);
-    return () => window.removeEventListener('scroll', h);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    document.body.classList.toggle('dark', dark);
-  }, [dark]);
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/95 dark:bg-navy-950/95 backdrop-blur-xl shadow-lg shadow-navy-900/5' : 'bg-transparent'
-      }`}
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 backdrop-blur bg-white/95 ${scrolled ? 'shadow-xl' : 'shadow-none'}`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-18 items-center justify-between">
-          <motion.a href="/" className="flex items-center gap-2">
-            <Link to="/">
-              <Logo className="h-10 w-auto" variant="full" />
-            </Link>
-          </motion.a>
+        <div className="flex h-18 items-center justify-between gap-4 py-3">
+          <Link to="/" className="flex items-center gap-3">
+            <Logo className="h-10 w-auto text-slate-950" variant="full" />
+          </Link>
 
-          <div className="hidden lg:flex items-center gap-0.5">
-            {links.map((l) => {
-              const isActive = location.pathname === l.href;
+          <div className="hidden lg:flex items-center gap-2">
+            {links.map((link) => {
+              const isActive = location.pathname === link.href;
               return (
-                <motion.div key={l.href} whileHover={{ y: -2 }}>
-                  <Link
-                    to={l.href}
-                    className={`px-3 py-2 rounded-lg text-[13px] font-medium transition-colors block ${
-                      isActive
-                        ? scrolled
-                          ? 'text-navy-900 bg-navy-100 dark:text-white dark:bg-navy-800'
-                          : 'text-white bg-white/20'
-                        : scrolled
-                        ? 'text-navy-600 hover:text-navy-900 hover:bg-navy-50 dark:text-navy-300 dark:hover:text-white'
-                        : 'text-white/80 hover:text-white hover:bg-white/10'
-                    }`}
-                  >
-                    {l.label}
-                  </Link>
-                </motion.div>
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className={`px-4 py-2 text-sm font-medium transition ${
+                    isActive ? 'text-slate-950' : 'text-slate-700 hover:text-slate-950'
+                  }`}
+                >
+                  {link.label}
+                </Link>
               );
             })}
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setDark(!dark)}
-              className={`p-2 rounded-lg transition ${scrolled ? 'text-navy-500 hover:bg-navy-50' : 'text-white/70 hover:bg-white/10'}`}
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
             >
-              {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </motion.button>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link
-                to="/contact"
-                className="flex items-center gap-2 rounded-lg bg-yellow-500 px-4 py-2.5 text-[13px] font-semibold text-white shadow-lg shadow-yellow-400/25 hover:bg-yellow-500-dark transition-all"
-              >
-                <Phone className="h-3.5 w-3.5" />
-                Request Demo
-              </Link>
-            </motion.div>
+              <Phone className="h-4 w-4" />
+              Request Demo
+            </Link>
           </div>
 
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            onClick={() => setOpen(!open)}
-            className={`lg:hidden p-2 rounded-lg ${scrolled ? 'text-navy-700' : 'text-white'}`}
+          <button
+            onClick={() => setOpen((prev) => !prev)}
+            className="lg:hidden p-2 text-slate-900"
+            aria-label="Toggle menu"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </motion.button>
+          </button>
         </div>
       </div>
 
@@ -109,30 +81,28 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white dark:bg-navy-950 border-t border-navy-100 dark:border-navy-800 shadow-xl"
+            className="lg:hidden border-t border-slate-200 bg-white"
           >
-            <div className="px-4 py-4 space-y-1">
-              {links.map((l) => {
-                const isActive = location.pathname === l.href;
+            <div className="px-4 py-4 space-y-2">
+              {links.map((link) => {
+                const isActive = location.pathname === link.href;
                 return (
                   <Link
-                    key={l.href}
-                    to={l.href}
+                    key={link.href}
+                    to={link.href}
                     onClick={() => setOpen(false)}
-                    className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                      isActive
-                        ? 'text-white bg-navy-700 dark:bg-navy-600'
-                        : 'text-navy-700 dark:text-navy-200 hover:bg-navy-50 dark:hover:bg-navy-800'
+                    className={`block rounded-2xl px-4 py-3 text-sm font-medium transition ${
+                      isActive ? 'bg-slate-100 text-slate-950' : 'text-slate-700 hover:bg-slate-50'
                     }`}
                   >
-                    {l.label}
+                    {link.label}
                   </Link>
                 );
               })}
               <Link
                 to="/contact"
                 onClick={() => setOpen(false)}
-                className="block mt-2 text-center rounded-lg bg-yellow-500 px-4 py-3 text-sm font-semibold text-white"
+                className="block rounded-full bg-slate-950 px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
               >
                 Request Demo
               </Link>

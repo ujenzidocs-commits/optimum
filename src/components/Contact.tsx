@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle, MessageCircle, Smartphone, AlertCircle, Loader } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle, MessageCircle, Loader } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { useOnlineStatus } from './OfflineBanner';
 import { validateForm, getFieldError, type FormData, type ValidationError } from '../utils/validation';
@@ -28,19 +28,17 @@ export default function Contact() {
 
   const set = (k: string, v: string) => setForm({ ...form, [k]: v });
 
-  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrors([]);
     setServerError(null);
 
-    // Validate form
     const validation = validateForm(form);
     if (!validation.isValid) {
       setErrors(validation.errors);
       return;
     }
 
-    // Check online status
     if (!isOnline) {
       setServerError('You are offline. Please check your internet connection before submitting.');
       return;
@@ -49,7 +47,6 @@ export default function Contact() {
     setLoading(true);
 
     try {
-      // Create lead object
       const lead: Lead = {
         ...form,
         id: Date.now().toString(),
@@ -57,7 +54,6 @@ export default function Contact() {
         status: 'New',
       };
 
-      // Save to Firebase Realtime Database
       await fbSet(`leads/${lead.id}`, {
         name: form.name,
         email: form.email,
@@ -71,12 +67,8 @@ export default function Contact() {
         status: 'New',
       });
 
-      // Save locally in context
       update({ ...data, leads: [...data.leads, lead] });
-
-      // Send email notification
       await sendEmailNotification(form);
-
       setOk(true);
       setForm({
         name: '',
@@ -100,7 +92,6 @@ export default function Contact() {
 
   const sendEmailNotification = async (formData: FormData) => {
     try {
-      // Send email via backend API (optional - configure your email service)
       const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -111,22 +102,20 @@ export default function Contact() {
             <h2>Thank you for your demo request!</h2>
             <p>Hi ${formData.name},</p>
             <p>We've received your request for a Tally Prime demo. Our team will contact you within 24 hours.</p>
-            <p><strong>Your Details:</strong></p>
             <ul>
               <li>Company: ${formData.company || 'Not provided'}</li>
               <li>Phone: ${formData.phone}</li>
               <li>Preferred Date: ${formData.demoDate || 'Not specified'}</li>
             </ul>
-            <p>Best regards,<br>Optimum Prime Solutions Team</p>
-          `
-        })
+            <p>Best regards,<br/>Optimum Prime Solutions Team</p>
+          `,
+        }),
       });
 
       if (!response.ok) {
         console.warn('Email notification failed - form was saved to database');
       }
     } catch (error) {
-      // Email failed but form was saved - this is okay
       console.warn('Could not send email notification:', error);
     }
   };
@@ -139,141 +128,132 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="relative py-32 bg-gradient-to-b from-navy-50 to-white dark:from-navy-900/50 dark:to-navy-950 overflow-hidden">
-      <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
-      <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-400/10 rounded-full blur-3xl" />
-
+    <section id="contact" className="relative overflow-hidden bg-slate-50 py-24">
+      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-slate-100 to-transparent" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center max-w-3xl mx-auto mb-20">
-          <span className="inline-block rounded-full bg-yellow-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-yellow-600">Contact</span>
-          <h2 className="mt-6 text-4xl sm:text-5xl font-extrabold text-navy-900 dark:text-navy-900 leading-tight">
-            Request a <span className="bg-gradient-to-r from-yellow-400 to-blue-600 bg-clip-text text-transparent">Demo</span>
-          </h2>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
-          <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="lg:col-span-2 space-y-4">
-            {info.map(({ icon: Ic, title, lines }) => (
-              <div key={title} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl hover:bg-white dark:hover:bg-navy-800/50 transition-all touch-target">
-                <div className="h-12 w-12 min-h-12 min-w-12 rounded-xl bg-gradient-to-br from-yellow-400/20 to-blue-500/10 flex items-center justify-center shrink-0">
-                  <Ic className="h-5 w-5 text-yellow-600" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-navy-900 dark:text-white">{title}</h4>
-                  {lines.map((l) => (
-                    <p key={l} className="text-xs sm:text-sm text-navy-600 dark:text-navy-600 mt-1">
-                      {l}
-                    </p>
-                  ))}
-                </div>
+        <div className="grid gap-10 lg:grid-cols-5 lg:gap-12">
+          <div className="lg:col-span-2 space-y-6 rounded-[2rem] border border-slate-200 bg-white p-8 shadow-soft">
+            <div className="space-y-4">
+              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
+                Contact
+              </span>
+              <div>
+                <h2 className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                  Request a demo with the team that helps businesses grow faster.
+                </h2>
+                <p className="mt-4 text-base text-slate-600">
+                  Complete the form and a specialist will contact you with a custom TallyPrime plan for your organization.
+                </p>
               </div>
-            ))}
+            </div>
 
-            <a href={`https://wa.me/${c.whatsapp}`} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-green-600 to-green-700 px-4 sm:px-6 py-3 sm:py-4 text-sm font-semibold text-white shadow-lg hover:shadow-xl transition w-full touch-target min-h-12">
-              <MessageCircle className="h-4 w-4" />
-              Chat on WhatsApp
+            <div className="space-y-4">
+              {info.map(({ icon: Icon, title, lines }) => (
+                <div key={title} className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                  <div className="flex items-center gap-3 text-slate-900">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-3xl bg-slate-900 text-white">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold">{title}</p>
+                      {lines.map((line) => (
+                        <p key={line} className="mt-1 text-sm text-slate-600">{line}</p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href={`https://wa.me/${c.whatsapp}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-slate-200 bg-slate-950 px-6 py-4 text-sm font-semibold text-white transition hover:bg-slate-800"
+            >
+              <MessageCircle className="h-4 w-4" /> Chat on WhatsApp
             </a>
 
-            <div className="rounded-2xl overflow-hidden border border-navy-200 dark:border-navy-700 h-48 shadow-lg">
+            <div className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 h-56">
               <iframe src={c.mapUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" title="Location" />
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="lg:col-span-3">
-            <div className="rounded-2xl border border-navy-200 dark:border-navy-700 bg-white dark:bg-navy-800 p-6 sm:p-8 shadow-xl">
-              <div className="flex items-center gap-3 mb-6">
-                <Smartphone className="h-5 sm:h-6 w-5 sm:w-6 text-yellow-600" />
-                <h3 className="text-xl sm:text-2xl font-bold text-navy-900 dark:text-white">Demo Request</h3>
+          <div className="lg:col-span-3">
+            <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-soft">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Demo request</p>
+                  <h3 className="mt-3 text-2xl font-bold text-slate-950">Let's build your next TallyPrime solution.</h3>
+                </div>
+                <div className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700">
+                  {isOnline ? 'Online' : 'Offline'}
+                </div>
               </div>
 
-              {!isOnline && (
-                <div className="mb-4 flex items-start gap-3 rounded-lg border border-orange-500/20 bg-orange-500/10 p-3">
-                  <AlertCircle className="h-5 w-5 text-orange-600 shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-semibold text-orange-900 dark:text-orange-100">Offline Mode</h4>
-                    <p className="text-xs text-orange-800 dark:text-orange-200">You are offline. Your request will be saved locally.</p>
-                  </div>
-                </div>
-              )}
-
               {serverError && (
-                <div className="mb-4 flex items-start gap-3 rounded-lg border border-red-500/20 bg-red-500/10 p-3">
-                  <AlertCircle className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-semibold text-red-900 dark:text-red-100">Error</h4>
-                    <p className="text-xs text-red-800 dark:text-red-200">{serverError}</p>
-                  </div>
+                <div className="mt-6 rounded-3xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                  {serverError}
                 </div>
               )}
 
               {ok ? (
-                <div className="mt-6 flex flex-col items-center py-12 text-center">
-                  <CheckCircle className="h-14 sm:h-16 w-14 sm:w-16 text-green-500" />
-                  <h4 className="mt-4 text-lg sm:text-xl font-bold text-navy-900 dark:text-white">Request Submitted!</h4>
-                  <p className="mt-2 text-sm text-navy-600 dark:text-navy-300">Thank you! Our team will contact you within 24 hours.</p>
+                <div className="mt-8 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-10 text-center">
+                  <CheckCircle className="mx-auto h-12 w-12 text-slate-950" />
+                  <h4 className="mt-4 text-xl font-semibold text-slate-950">Request submitted</h4>
+                  <p className="mt-2 text-sm text-slate-600">Our team will get back to you within 24 hours.</p>
                 </div>
               ) : (
-                <form onSubmit={submit} className="mt-6 space-y-4">
-                  <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+                <form onSubmit={submit} className="mt-8 grid gap-4">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     {[
-                      { k: 'name', l: 'Full Name *', t: 'text', p: 'John Doe' },
-                      { k: 'company', l: 'Company Name', t: 'text', p: 'Your Company' },
-                      { k: 'phone', l: 'Phone *', t: 'tel', p: '+254 700 000 000' },
+                      { k: 'name', l: 'Full name *', t: 'text', p: 'John Doe' },
+                      { k: 'company', l: 'Company name', t: 'text', p: 'Your company' },
+                      { k: 'phone', l: 'Phone *', t: 'tel', p: '+254 700 000000' },
                       { k: 'email', l: 'Email *', t: 'email', p: 'john@company.ke' },
-                      { k: 'businessType', l: 'Business Type', t: 'text', p: 'Retail / Manufacturing' },
-                      { k: 'demoDate', l: 'Preferred Date', t: 'date', p: '' },
-                      { k: 'currentSoftware', l: 'Current Software', t: 'text', p: 'Excel / QuickBooks' },
-                    ].map((f) => {
-                      const error = getFieldError(errors, f.k);
+                      { k: 'businessType', l: 'Business type', t: 'text', p: 'Retail / Manufacturing' },
+                      { k: 'demoDate', l: 'Preferred date', t: 'date', p: '' },
+                      { k: 'currentSoftware', l: 'Current software', t: 'text', p: 'QuickBooks, Excel' },
+                    ].map((field) => {
+                      const error = getFieldError(errors, field.k);
                       return (
-                        <div key={f.k}>
-                          <label className="block text-xs font-semibold text-navy-700 dark:text-navy-300 mb-2">
-                            {f.l}
-                            {error && <span className="text-red-500 ml-1">✗</span>}
-                          </label>
+                        <label key={field.k} className="block text-sm text-slate-700">
+                          <span className="block mb-2 font-semibold">{field.l}</span>
                           <input
-                            name={f.k}
-                            type={f.t}
-                            value={(form as Record<string, string>)[f.k]}
-                            onChange={(e) => set(f.k, e.target.value)}
-                            placeholder={f.p}
-                            required={f.l.includes('*')}
-                            className={`w-full rounded-lg border px-3 sm:px-4 py-2.5 text-sm outline-none transition min-h-12 ${
-                              error
-                                ? 'border-red-500 bg-red-50 dark:bg-red-500/10 focus:ring-2 focus:ring-red-400'
-                                : 'border-navy-200 dark:border-navy-600 bg-navy-50 dark:bg-navy-700 focus:border-yellow-300 focus:ring-2 focus:ring-accent/30'
-                            } text-navy-900 dark:text-white`}
+                            type={field.t}
+                            value={(form as Record<string, string>)[field.k]}
+                            onChange={(e) => set(field.k, e.target.value)}
+                            placeholder={field.p}
+                            required={field.l.includes('*')}
+                            className={`w-full rounded-3xl border px-4 py-3 text-sm text-slate-900 outline-none transition ${
+                              error ? 'border-red-300 bg-red-50' : 'border-slate-200 bg-slate-50'
+                            }`}
                           />
-                          {error && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{error}</p>}
-                        </div>
+                          {error && <p className="mt-2 text-xs text-red-600">{error}</p>}
+                        </label>
                       );
                     })}
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-navy-700 dark:text-navy-300 mb-2">
-                      Message
-                      {getFieldError(errors, 'message') && <span className="text-red-500 ml-1">✗</span>}
-                    </label>
+                  <label className="block text-sm text-slate-700">
+                    <span className="block mb-2 font-semibold">Message</span>
                     <textarea
                       name="message"
                       value={form.message}
                       onChange={(e) => set('message', e.target.value)}
-                      rows={3}
+                      rows={4}
                       placeholder="Tell us about your needs... (optional)"
-                      className={`w-full rounded-lg border px-3 sm:px-4 py-2.5 text-sm outline-none transition resize-none ${
-                        getFieldError(errors, 'message')
-                          ? 'border-red-500 bg-red-50 dark:bg-red-500/10 focus:ring-2 focus:ring-red-400'
-                          : 'border-navy-200 dark:border-navy-600 bg-navy-50 dark:bg-navy-700 focus:border-yellow-300 focus:ring-2 focus:ring-accent/30'
-                      } text-navy-900 dark:text-white`}
+                      className={`w-full rounded-3xl border px-4 py-3 text-sm text-slate-900 outline-none transition ${
+                        getFieldError(errors, 'message') ? 'border-red-300 bg-red-50' : 'border-slate-200 bg-slate-50'
+                      }`}
                     />
-                    {getFieldError(errors, 'message') && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{getFieldError(errors, 'message')}</p>}
-                  </div>
+                    {getFieldError(errors, 'message') && <p className="mt-2 text-xs text-red-600">{getFieldError(errors, 'message')}</p>}
+                  </label>
 
                   <button
                     type="submit"
                     disabled={loading || !isOnline}
-                    className="w-full rounded-lg bg-gradient-to-r from-yellow-400 to-blue-600 px-4 sm:px-6 py-3 text-sm font-bold text-white shadow-lg shadow-yellow-400/30 hover:shadow-xl transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed min-h-12 touch-target"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-950 px-6 py-4 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {loading ? (
                       <>
@@ -290,7 +270,7 @@ export default function Contact() {
                 </form>
               )}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
