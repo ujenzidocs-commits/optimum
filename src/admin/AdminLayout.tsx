@@ -78,8 +78,8 @@ export default function AdminLayout({ onLogout }: Props) {
             onClick={() => { setTab(t.id); if (mobile) setSidebar(false); }}
             className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
               isActive
-                ? 'bg-navy-900 text-white shadow-lg shadow-navy-900/20'
-                : 'text-navy-600 hover:bg-navy-50'
+                ? 'bg-navy-800 text-white shadow-lg shadow-navy-900/20'
+                : 'text-navy-300 hover:bg-navy-800'
             }`}
           >
             <Icon className="h-4 w-4 shrink-0" />
@@ -130,7 +130,7 @@ export default function AdminLayout({ onLogout }: Props) {
             <div className="h-16 flex items-center justify-between border-b border-navy-100 px-5 shrink-0">
               <div className="flex items-center gap-2">
                 <div className="h-8 w-8 rounded-lg bg-accent flex items-center justify-center font-black text-xs text-white">OP</div>
-                <p className="text-sm font-bold text-navy-900">Admin</p>
+    <div className="flex h-screen bg-navy-950 text-white">
               </div>
               <button onClick={() => setSidebar(false)} className="rounded-lg p-1.5 hover:bg-navy-50 transition">
                 <X className="h-5 w-5 text-navy-400" />

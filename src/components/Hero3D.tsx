@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
-import TallyLogo from './TallyLogo';
 import WhatsAppIcon from './WhatsAppIcon';
 import { useSite } from '../context/SiteContext';
 
@@ -14,18 +13,18 @@ export default function Hero3D() {
       <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] items-center">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <div className="flex flex-wrap items-center gap-4">
-              <Logo className="h-11 w-auto text-slate-950" variant="icon" />
-              <div className="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 shadow-sm">
-                <TallyLogo className="h-6 w-auto" />
-                Trusted TallyPrime partner in Kenya
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+              <Logo className="h-12 w-auto text-slate-950" variant="icon" />
+              <div className="mt-3 sm:mt-0 inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 shadow-sm">
+                Trusted implementation partner in Kenya
               </div>
             </div>
+
             <h1 className="mt-8 max-w-3xl text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
-              Modern TallyPrime implementation for leaders who want control, compliance, and growth.
+              Optimum Prime Solutions Ltd.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-              Optimum Prime Solutions helps Kenyan businesses streamline accounting, inventory, payroll and KRA compliance with a premium, enterprise-ready TallyPrime experience.
+              Optimum Prime Solutions Ltd helps Kenyan businesses streamline accounting, inventory, payroll and KRA compliance with enterprise-grade solutions and expert support.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
@@ -33,7 +32,7 @@ export default function Hero3D() {
                 Request Demo
               </Link>
               <a
-                href={`https://wa.me/${data.contact.whatsapp}?text=Hi,%20I%20am%20interested%20in%20TallyPrime`}
+                href={`https://wa.me/${data.contact.whatsapp}?text=Hi,%20I%20am%20interested%20in%20your%20services`}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl bg-green-600 px-6 py-4 text-sm font-bold text-white shadow-xl shadow-green-500/30 hover:bg-green-700 transition-all"

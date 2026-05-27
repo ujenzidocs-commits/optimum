@@ -187,7 +187,7 @@ export default function Contact() {
                   <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">Demo request</p>
                   <h3 className="mt-3 text-2xl font-bold text-white">Let's build your next TallyPrime solution.</h3>
                 </div>
-                <div className="rounded-full border border-red-700 bg-red-700 px-4 py-2 text-sm font-semibold text-white">
+                <div className="rounded-full border border-slate-700 bg-slate-900 px-4 py-2 text-sm font-semibold text-slate-300">
                   {isOnline ? 'Online' : 'Offline'}
                 </div>
               </div>
