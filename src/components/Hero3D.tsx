@@ -18,24 +18,26 @@ export default function Hero3D() {
             </div>
 
             <h1 className="mt-8 max-w-3xl text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
-              Optimum Prime Solutions Ltd.
+              Helping Businesses Gain Financial Clarity, Connectivity & Operational Traction
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-              Cloud Simplified, Business Amplified.
+              We implement TallyPrime, provide secure cloud hosting, and help businesses improve systems, reporting, accountability, and operational performance across multiple locations.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
               <Link to="/contact" className="btn-primary">
-                Request Demo
+                Book a Consultation
+              </Link>
+              <Link to="/contact" className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-4 text-sm font-bold text-white shadow-xl shadow-blue-500/20 hover:bg-blue-700 transition-all">
+                Request a Demo
               </Link>
               <a
-                href={`https://wa.me/${data.contact.whatsapp}?text=Hi,%20I%20am%20interested%20in%20your%20services`}
+                href={`https://wa.me/${data.contact.whatsapp}?text=Hi,%20I%20need%20to%20talk%20to%20an%20expert`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-green-600 px-6 py-4 text-sm font-bold text-white shadow-xl shadow-green-500/30 hover:bg-green-700 transition-all"
+                className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white text-slate-900 px-5 py-3 text-sm font-semibold hover:shadow-lg transition"
               >
-                <WhatsAppIcon className="h-4 w-4 text-white" />
-                Chat on WhatsApp
+                Talk to an Expert
               </a>
             </div>
 

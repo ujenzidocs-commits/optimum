@@ -11,12 +11,13 @@ export default function About() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div initial="hidden" whileInView="visible" viewport={{once:true}} variants={{visible:{transition:{staggerChildren:0.15}}}}>
-            <motion.span variants={fade} custom={0} className="inline-block rounded-full bg-yellow-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-yellow-600">About Us</motion.span>
-            <motion.h2 variants={fade} custom={1} className="mt-4 text-3xl sm:text-4xl font-bold text-navy-900 dark:text-white">Kenya's Leading <span className="text-yellow-600">Tally Prime</span> Partner</motion.h2>
-            {c.about.map((p:string,i:number) => <motion.p key={i} variants={fade} custom={i+2} className="mt-4 text-navy-600 dark:text-navy-700 leading-relaxed">{p}</motion.p>)}
+            <motion.span variants={fade} custom={0} className="inline-block rounded-full bg-blue-900/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-blue-300">About Optimum Prime Solutions</motion.span>
+            <motion.h2 variants={fade} custom={1} className="mt-4 text-3xl sm:text-4xl font-bold text-navy-900 dark:text-white">Systems That Help Businesses Grow</motion.h2>
+            <motion.p variants={fade} custom={2} className="mt-4 text-navy-600 dark:text-navy-700 leading-relaxed">Optimum Prime Solutions combines technology implementation, secure cloud infrastructure, and operational consulting to deliver financial clarity, centralized reporting, and scalable systems for multi-branch businesses.</motion.p>
+            <motion.p variants={fade} custom={3} className="mt-4 text-navy-600 dark:text-navy-700 leading-relaxed">We move companies beyond basic accounting into reliable systems that improve decision-making, accountability, and operational efficiency — from implementation and training to ongoing optimization and support.</motion.p>
             <motion.div variants={fade} custom={4} className="mt-8 grid grid-cols-2 gap-5">
               {c.stats.map((s:{label:string;value:string},i:number)=>{const I=icons[i%icons.length];return(
-                <div key={s.label} className="flex items-center gap-3"><div className="h-10 w-10 rounded-lg bg-yellow-400/10 flex items-center justify-center shrink-0"><I className="h-5 w-5 text-yellow-600"/></div><div><p className="text-sm font-bold text-navy-900 dark:text-white">{s.value}</p><p className="text-xs text-navy-500 dark:text-navy-600">{s.label}</p></div></div>
+                <div key={s.label} className="flex items-center gap-3"><div className="h-10 w-10 rounded-lg bg-blue-900/10 flex items-center justify-center shrink-0"><I className="h-5 w-5 text-blue-400"/></div><div><p className="text-sm font-bold text-navy-900 dark:text-white">{s.value}</p><p className="text-xs text-navy-500 dark:text-navy-600">{s.label}</p></div></div>
               );})}
             </motion.div>
           </motion.div>
