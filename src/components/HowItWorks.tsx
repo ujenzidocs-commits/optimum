@@ -17,12 +17,12 @@ export default function HowItWorks() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto">
-          <span className="inline-block rounded-full bg-yellow-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-yellow-600">How It Works</span>
+          <span className="inline-block rounded-full bg-blue-900/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-blue-300">Our Process</span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-navy-900 dark:text-white">
-            <span className="text-navy-900 dark:text-white">From Zero to Tally Prime in </span><span className="text-yellow-600">4 Simple Steps</span>
+            From Discovery to Operational Traction — A Practical 6-Step Approach
           </h2>
           <p className="mt-4 text-navy-600 dark:text-navy-300">
-            We make the transition seamless. Most businesses are up and running within a week.
+            We align systems, cloud infrastructure, and workflows to deliver faster reporting, accountability, and scalable operations across locations.
           </p>
         </motion.div>
 

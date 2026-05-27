@@ -36,14 +36,14 @@ export default function Products() {
           viewport={{ once: true }}
           className="text-center max-w-4xl mx-auto mb-20"
         >
-          <span className="inline-block rounded-full bg-red-600/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-red-300">
-            Pricing Plans
+          <span className="inline-block rounded-full bg-blue-900/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-blue-300">
+            Services Overview
           </span>
           <h2 className="mt-6 text-4xl sm:text-5xl font-extrabold text-white leading-tight">
-            Choose Your <span className="bg-gradient-to-r from-red-500 to-slate-200 bg-clip-text text-transparent">TallyPrime License</span>
+            Solutions for Systems, Cloud & Scalable Operations
           </h2>
           <p className="mt-6 text-lg text-slate-300 leading-relaxed">
-            Silver, Gold, Plus, Enterprise deployment, and TDL customization. Pick the plan that fits your business size and needs.
+            From implementation and hosting to process optimization and reporting, choose the combination of services that delivers operational traction and growth for your business.
           </p>
         </motion.div>
 

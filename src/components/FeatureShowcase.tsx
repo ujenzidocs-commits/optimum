@@ -25,14 +25,14 @@ export default function FeatureShowcase() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto">
-          <span className="inline-block rounded-full bg-yellow-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
-            TallyPrime Capabilities
+          <span className="inline-block rounded-full bg-blue-900/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
+            Services
           </span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-navy-900 dark:text-white">
-            Make the Most Out of <span className="text-yellow-600">TallyPrime</span>
+            Solutions That Deliver Financial Clarity & Operational Traction
           </h2>
           <p className="mt-4 text-white">
-            Everything you need to run your business like a pro — simple to learn, effortless to master.
+            From reporting to multi-branch connectivity and cloud hosting, our services focus on measurable business outcomes — faster reporting, stronger controls, and scalable operations.
           </p>
         </motion.div>
 

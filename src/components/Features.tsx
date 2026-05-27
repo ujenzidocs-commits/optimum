@@ -40,12 +40,12 @@ export default function Features() {
           <motion.span animate={{ rotate: [0, 360] }} transition={{ duration: 3, repeat: Infinity }} className="inline-block">
             <Sparkles className="h-5 w-5 text-red-500" />
           </motion.span>
-          <span className="inline-block rounded-full bg-red-600/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-red-300 ml-2">Our Services</span>
+          <span className="inline-block rounded-full bg-blue-900/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-blue-300 ml-2">Our Services</span>
           <h2 className="mt-6 text-4xl sm:text-5xl font-extrabold text-white leading-tight">
-            End-to-End <span className="bg-gradient-to-r from-red-500 to-slate-200 bg-clip-text text-transparent">TallyPrime</span> Solutions
+            Business Systems, Cloud Hosting & Operational Consulting
           </h2>
           <p className="mt-6 text-lg text-slate-300 leading-relaxed">
-            From installation to customization, we cover every aspect of your business management needs with expert support and proven results.
+            We design and implement systems that deliver financial clarity, centralized reporting, and operational traction — combining TallyPrime expertise with secure cloud hosting and process optimization.
           </p>
         </motion.div>
 

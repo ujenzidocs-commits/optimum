@@ -42,14 +42,14 @@ export default function ImplementationDetail() {
           viewport={{ once: true }}
           className="max-w-3xl"
         >
-          <span className="inline-block rounded-full border border-yellow-300/30 bg-yellow-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-yellow-600-light">
-            Senior implementation approach
+          <span className="inline-block rounded-full border border-blue-700/20 bg-blue-900/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-blue-300">
+            Implementation & Cloud Hosting
           </span>
           <h2 className="mt-5 text-3xl sm:text-4xl font-bold tracking-tight">
-            A complete TallyPrime rollout, not just software installation.
+            End-to-end systems delivery — implementation, hosting, and operational enablement
           </h2>
           <p className="mt-4 text-navy-700 leading-relaxed">
-            The final website now presents Optimum Prime Solutions as a premium implementation partner. It explains licensing, migration, compliance, support, and governance in a way business owners, accountants, and directors can trust.
+            We combine deep TallyPrime expertise with secure cloud infrastructure and process design to deliver reliable reporting, resilient operations, and measurable business outcomes.
           </p>
         </motion.div>
 
@@ -65,8 +65,8 @@ export default function ImplementationDetail() {
                 transition={{ delay: index * 0.08 }}
                 className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm"
               >
-                <div className="h-11 w-11 rounded-xl bg-yellow-400/15 flex items-center justify-center mb-5">
-                  <Icon className="h-5 w-5 text-yellow-600-light" />
+                <div className="h-11 w-11 rounded-xl bg-blue-900/10 flex items-center justify-center mb-5">
+                  <Icon className="h-5 w-5 text-blue-400" />
                 </div>
                 <h3 className="text-base font-bold">{item.title}</h3>
                 <ul className="mt-4 space-y-2.5">
