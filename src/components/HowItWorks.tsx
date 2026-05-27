@@ -60,8 +60,8 @@ export default function HowItWorks() {
 
         {/* CTA like Tally's "Ready to fall in love" */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="mt-20 rounded-3xl bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900 p-10 lg:p-14 text-center relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(37,99,235,0.20),transparent_60%)]" />
+          className="mt-20 rounded-3xl bg-gradient-to-br from-red-700 via-red-600 to-red-700 p-10 lg:p-14 text-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(220,38,38,0.22),transparent_60%)]" />
           <div className="relative">
             <h3 className="text-2xl sm:text-3xl font-bold text-white">
               Ready to transform your business? 🚀
@@ -70,7 +70,7 @@ export default function HowItWorks() {
               Join 500+ Kenyan businesses already running smarter with Tally Prime. Get the full experience with a free, personalized demo.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link to="/contact" className="rounded-xl bg-yellow-500 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-yellow-400/30 hover:bg-yellow-500-dark transition-all hover:scale-105">
+              <Link to="/contact" className="rounded-xl bg-white px-8 py-4 text-sm font-bold text-red-700 shadow-xl shadow-red-400/20 hover:bg-red-50 transition-all hover:scale-105">
                 Request Free Demo
               </Link>
               <a href="https://tallysolutions.com/ssa/download/" target="_blank" rel="noreferrer"

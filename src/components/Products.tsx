@@ -24,10 +24,10 @@ export default function Products() {
   };
 
   return (
-    <section id="products" className="relative py-32 bg-gradient-to-b from-slate-950 via-slate-950 to-slate-900 overflow-hidden">
+    <section id="products" className="relative py-32 bg-gradient-to-br from-red-700 via-red-600 to-red-700 overflow-hidden">
       {/* Background animation */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 rounded-full blur-3xl opacity-40 -mr-48 -mt-48" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl opacity-30 -ml-48 -mb-48" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-red-500/30 rounded-full blur-3xl opacity-70 -mr-48 -mt-48" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-700/30 rounded-full blur-3xl opacity-40 -ml-48 -mb-48" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 font-sans">
         <motion.div
@@ -61,7 +61,7 @@ export default function Products() {
               whileHover={{ y: p.popular ? 0 : -8 }}
               className={`group relative rounded-2xl border p-8 transition-all duration-300 overflow-hidden ${
                 p.popular
-                      ? 'border-red-500/30 bg-gradient-to-br from-red-600/15 to-slate-950/90 shadow-2xl shadow-red-900/25 xl:scale-[1.05]'
+                  ? 'border-red-500/40 bg-gradient-to-br from-red-700 via-red-600 to-red-700 shadow-2xl shadow-red-900/40 xl:scale-[1.05] text-white'
                   : 'border-slate-800 bg-slate-950/95 hover:shadow-xl hover:shadow-black/20'
               }`}
             >

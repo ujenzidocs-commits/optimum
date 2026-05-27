@@ -60,14 +60,14 @@ export default function Hero() {
                 transition={{ duration: 2, repeat: Infinity }}
                 className="inline-flex items-center gap-2"
               >
-                <span className="h-2 w-2 rounded-full bg-yellow-500 animate-pulse" />
+                <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
               </motion.span>
               <motion.span 
-                className="inline-flex items-center gap-2 rounded-full border border-yellow-400/50 bg-yellow-300/15 px-4 py-1.5 text-sm text-yellow-700 font-medium"
+                className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 py-1.5 text-sm text-red-100 font-medium"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
-                whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 215, 0, 0.25)" }}
+                whileHover={{ scale: 1.05, backgroundColor: "rgba(239, 68, 68, 0.18)" }}
               >
                 #1 TallyPrime Partner in Kenya
               </motion.span>

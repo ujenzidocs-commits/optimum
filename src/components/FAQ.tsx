@@ -18,7 +18,7 @@ export default function FAQ() {
     <section id="faq" className="py-24 bg-white dark:bg-navy-950">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} className="text-center">
-          <span className="inline-flex items-center gap-2 rounded-full bg-yellow-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-yellow-600"><HelpCircle className="h-3.5 w-3.5"/>FAQ</span>
+          <span className="inline-flex items-center gap-2 rounded-full bg-red-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-red-700"><HelpCircle className="h-3.5 w-3.5"/>FAQ</span>
           <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-navy-900 dark:text-white">Frequently Asked Questions</h2>
         </motion.div>
         <div className="mt-8 relative"><Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-navy-600"/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search questions..." className="w-full rounded-xl border border-navy-200 dark:border-navy-700 bg-navy-50 dark:bg-navy-800 pl-11 pr-4 py-3.5 text-sm outline-none focus:border-yellow-300"/></div>

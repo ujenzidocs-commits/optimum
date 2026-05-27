@@ -20,7 +20,7 @@ export default function Footer() {
   return (
     <footer className="bg-blue-950 text-slate-100">
       <div className="mx-auto max-w-7xl space-y-12 px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-[1.4fr_0.9fr_0.9fr_1fr]">
+        <div className="rounded-3xl bg-blue-900 p-8 grid gap-8 lg:grid-cols-[1.4fr_0.9fr_0.9fr_1fr]">
           <div className="space-y-5">
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-900 text-white">
