@@ -209,15 +209,15 @@ export default function Chatbot() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
             onClick={() => setOpen(true)}
-            className="fixed bottom-6 right-6 z-40 h-14 w-14 rounded-full bg-gradient-to-br from-yellow-400 via-blue-600 to-yellow-600 text-white shadow-2xl shadow-yellow-400/40 hover:scale-110 transition-all flex items-center justify-center group"
+            className="fixed bottom-6 right-6 z-40 h-14 w-14 rounded-full bg-gradient-to-br from-sky-500 via-blue-600 to-blue-700 text-white shadow-2xl shadow-blue-600/40 hover:scale-110 transition-all flex items-center justify-center group"
             aria-label="Chat"
           >
             <motion.div animate={{ rotate: [0, 10, -10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
               <MessageCircle className="h-6 w-6" />
             </motion.div>
             <span className="absolute -top-1 -right-1 flex h-4 w-4">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-500 opacity-75" />
-              <span className="relative h-4 w-4 rounded-full bg-yellow-500" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-500 opacity-75" />
+              <span className="relative h-4 w-4 rounded-full bg-sky-500" />
             </span>
           </motion.button>
         )}
@@ -240,7 +240,7 @@ export default function Chatbot() {
               <div className="flex items-center gap-2.5">
                 <div className="relative h-8 w-8 rounded-full bg-white/10 flex items-center justify-center">
                   <motion.div animate={{ rotate: 360 }} transition={{ duration: 3, repeat: Infinity }}>
-                    <Bot className="h-4 w-4 text-yellow-600" />
+                    <Bot className="h-4 w-4 text-sky-300" />
                   </motion.div>
                   <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-navy-900 bg-green-400" />
                 </div>
@@ -299,7 +299,7 @@ export default function Chatbot() {
                         className={`h-7 w-7 rounded-full flex items-center justify-center shrink-0 ${
                           m.role === 'bot'
                             ? 'bg-navy-800'
-                            : 'bg-gradient-to-br from-yellow-400 to-blue-600'
+                            : 'bg-gradient-to-br from-sky-500 to-blue-600'
                         }`}
                       >
                         {m.role === 'bot' ? (
@@ -322,7 +322,7 @@ export default function Chatbot() {
                             animate={{ opacity: 1, y: 0 }}
                             whileHover={{ scale: 1.05 }}
                             onClick={() => setDemoOpen(true)}
-                            className="mt-2 inline-block rounded-lg bg-yellow-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-yellow-500-dark transition"
+                            className="mt-2 inline-block rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 transition"
                           >
                             <Sparkles className="h-3 w-3 inline mr-1" />
                             Open Demo Form
@@ -381,7 +381,7 @@ export default function Chatbot() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => send(s)}
-                          className="rounded-full border border-yellow-300/20 bg-yellow-400/5 px-2.5 py-1 text-[10px] font-medium text-yellow-600 hover:bg-yellow-400/10 transition"
+                          className="rounded-full border border-sky-300/20 bg-sky-400/5 px-2.5 py-1 text-[10px] font-medium text-sky-600 hover:bg-sky-400/10 transition"
                         >
                           {s}
                         </motion.button>
@@ -396,14 +396,14 @@ export default function Chatbot() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Type a message..."
-                    className="flex-1 rounded-xl border border-navy-200 dark:border-navy-700 bg-navy-50 dark:bg-navy-800 px-3.5 py-2 text-sm outline-none focus:border-yellow-300 focus:ring-2 focus:ring-accent/30 text-navy-900 dark:text-white placeholder-navy-500 dark:placeholder-navy-400"
+                    className="flex-1 rounded-xl border border-navy-200 dark:border-navy-700 bg-navy-50 dark:bg-navy-800 px-3.5 py-2 text-sm outline-none focus:border-sky-300 focus:ring-2 focus:ring-sky-300/30 text-navy-900 dark:text-white placeholder-navy-500 dark:placeholder-navy-400"
                   />
                   <motion.button
                     type="submit"
                     disabled={!input.trim()}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="h-9 w-9 rounded-xl bg-yellow-500 text-white flex items-center justify-center hover:bg-yellow-500-dark transition disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="h-9 w-9 rounded-xl bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     <Send className="h-3.5 w-3.5" />
                   </motion.button>

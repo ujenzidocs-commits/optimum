@@ -130,7 +130,10 @@ export default function AdminLayout({ onLogout }: Props) {
             <div className="h-16 flex items-center justify-between border-b border-navy-100 px-5 shrink-0">
               <div className="flex items-center gap-2">
                 <div className="h-8 w-8 rounded-lg bg-accent flex items-center justify-center font-black text-xs text-white">OP</div>
-    <div className="flex h-screen bg-navy-950 text-white">
+                <div>
+                  <p className="text-sm font-bold text-navy-900">Admin Panel</p>
+                  <p className="text-[9px] uppercase tracking-[.15em] font-semibold text-accent">Content Manager</p>
+                </div>
               </div>
               <button onClick={() => setSidebar(false)} className="rounded-lg p-1.5 hover:bg-navy-50 transition">
                 <X className="h-5 w-5 text-navy-400" />

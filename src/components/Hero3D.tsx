@@ -10,21 +10,18 @@ export default function Hero3D() {
   return (
     <section id="home" className="relative overflow-hidden bg-slate-50">
       <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-slate-100 to-transparent" />
-      <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 pt-12 pb-24 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] items-center">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-              <Logo className="h-12 w-auto text-slate-950" variant="icon" />
-              <div className="mt-3 sm:mt-0 inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 shadow-sm">
-                Trusted implementation partner in Kenya
-              </div>
+              <Logo className="h-12 w-auto text-blue-950" variant="icon" />
             </div>
 
             <h1 className="mt-8 max-w-3xl text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
               Optimum Prime Solutions Ltd.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-              Optimum Prime Solutions Ltd helps Kenyan businesses streamline accounting, inventory, payroll and KRA compliance with enterprise-grade solutions and expert support.
+              Cloud Simplified, Business Amplified.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
